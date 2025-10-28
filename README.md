@@ -1,3 +1,17 @@
+![CI/CD Status](https://github.com/patricialis1/Check-Go/actions/workflows/test-db.yml/badge.svg)
+
+# Check & Go
+
+Projeto em dupla:
+- **@Ricardolenovo153**: CI/CD, Supabase, GitHub Actions, testes automáticos
+- **@patricialis1**: Lógica principal
+
+## Funcionalidades
+- Conexão com Supabase em tempo real
+- Testes automáticos a cada push
+- Segurança com `.env` e `.gitignore`
+
+
 # Check-Go
 Projeto com conexão em tempo real com **Supabase**, CI/CD automático via **GitHub Actions**.
 
