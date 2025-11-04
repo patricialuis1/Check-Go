@@ -1,0 +1,27 @@
+# Usa imagem oficial do PHP com extensões necessárias
+FROM php:8.2-fpm
+
+# Instala dependências do sistema e extensões do PHP
+RUN apt-get update && apt-get install -y \
+    git unzip libpq-dev libzip-dev zip && \
+    docker-php-ext-install pdo pdo_pgsql zip
+
+# Instala o Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Copia o código para dentro do container
+WORKDIR /var/www/html
+COPY . .
+
+# Instala dependências do Laravel
+RUN composer install --no-dev --optimize-autoloader
+
+# Define variáveis de ambiente
+ENV PORT=10000
+EXPOSE 10000
+
+# Gera key automaticamente se não existir
+RUN php artisan key:generate --force || true
+
+# Comando de inicialização
+CMD php artisan serve --host 0.0.0.0 --port $PORT
