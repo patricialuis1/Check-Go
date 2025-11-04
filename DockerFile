@@ -16,7 +16,7 @@ COPY . .
 # Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Define variáveis de ambiente
+# Define variáveis de ambientes
 ENV PORT=10000
 EXPOSE 10000
 
