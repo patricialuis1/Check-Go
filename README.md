@@ -10,7 +10,7 @@ O Check&Go é um sistema de gestão de tarefas pensado para pequenas e médias e
 
 ## Live Demo
 [**Acesse o site online aqui →**]
-(https://check-go-nine.vercel.app/)
+([https://check-go-seven.vercel.app/])
 
 ---
 
