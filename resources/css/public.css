@@ -1,0 +1,141 @@
+/* RESET & BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* HEADER */
+header {
+  background-color: #00c271;
+  padding: 1rem;
+}
+
+header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  height: 32px;
+}
+
+/* MAIN TEXT */
+main {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+main h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+main p.subtitle {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* SEARCH BOX */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-box {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 320px;
+  font-size: 0.9rem;
+}
+
+/* COMO FUNCIONA SECTION */
+.steps-section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.step {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.step-icon {
+  background-color: #00c271;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 0.8rem;
+}
+
+.step-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.step h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  font-size: 0.85rem;
+  color: #444;
+  padding: 0 1rem;
+}
+
+/* FOOTER */
+footer {
+  background-color: #1b1b1b;
+  color: white;
+  padding: 2rem 1rem;
+  text-align: left;
+}
+
+footer .footer-content {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+footer .footer-brand {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+footer .footer-brand img {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+}
+
+footer .footer-links a {
+  display: block;
+  color: #cccccc;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+}
+
+footer small {
+  display: block;
+  font-size: 0.75rem;
+  color: #777;
+  margin-top: 1rem;
+}
