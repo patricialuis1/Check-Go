@@ -1,0 +1,83 @@
+/* MAIN */
+main.container {
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+main h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #828282;
+}
+
+main p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* SEARCH BOX */
+.search-form {
+  display: flex;
+  justify-content: center;
+}
+
+.search-box {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  font-size: 0.95rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+
+/* TÍTULO DAS ETAPAS */
+main h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #828282;
+}
+
+/* ETAPAS */
+.step {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.step-icon {
+  background-color: #00c271;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+.step {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.step-img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+}
+
+.step h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: #828282;
+}
+
+.step p {
+  font-size: 0.85rem;
+  color: #444;
+  max-width: 300px;
+  margin: 0 auto;
+}
