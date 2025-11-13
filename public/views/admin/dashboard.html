@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administração - Check&Go</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+  <link rel="stylesheet" href="/css/layoutAdmin.css" />
+  <link rel="stylesheet" href="/css/dashboardAdmin.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo-section">
+        <img src="/imagens/Check_Go__3_-removebg-preview.png" alt="Logo Check&Go" />
+      </div>
+      <div class="user-info">
+        <p class="username">Tomás Ribeiro</p>
+        <p class="user-role">Admin</p>
+      </div>
+      <nav class="nav-menu">
+        <a href="#" class="nav-item active"><span class="icon">🏠</span> Home</a>
+        <a href="#" class="nav-item"><span class="icon">🏬</span> Lojas</a>
+        <a href="#" class="nav-item"><span class="icon">👥</span> Colaboradores</a>
+        <a href="#" class="nav-item"><span class="icon">📋</span> Serviços</a>
+        <a href="#" class="nav-item"><span class="icon">🔄</span> Voltar como Colab</a>
+      </nav>
+      <a href="#" class="logout"><span class="icon">🚪</span> Logout</a>
+    </aside>
+
+    <!-- Main Area -->
+    <main class="main-content">
+      <header class="main-header">
+        <h1>Administração</h1>
+        <div class="header-tools">
+          <button class="help-btn">❓</button>
+          <input type="text" placeholder="Search..." class="search-input" />
+          <button class="notif-btn">🔔</button>
+        </div>
+      </header>
+
+      <section class="cards-section">
+        <div class="card card-colabs">
+          <p>Colaboradores</p>
+          <h2>243</h2>
+        </div>
+        <div class="card card-lojas">
+          <p>Lojas</p>
+          <h2>82</h2>
+        </div>
+        <div class="card card-servicos">
+          <p>Serviços</p>
+          <h2>12</h2>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
