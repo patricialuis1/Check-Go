@@ -10,7 +10,6 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <div class="container-banner">
       <div class="logo">
@@ -23,41 +22,90 @@
     </div>
   </header>
 
-  <!-- Main Card -->
-  <main class="card">
-    <div class="store-info">
-      <h1>Continente Santarém</h1>
-      <h2>Talho</h2>
-    </div>
-
-    <!-- Ticket Icon -->
-    <div class="ticket-icon">
-        <img src="/imagens/ticket_black_transparent.png" alt="Ticket" />
-    </div>
-
-    <!-- Senha Atual -->
-    <div class="current-password">
-      <p>Senha Atual:</p>
-      <div class="digits">
-        <span class="digit">A</span>
-        <span class="digit">0</span>
-        <span class="digit">7</span>
-        <span class="digit">8</span>
+  <main class="container">
+    <div id="estado-inicial" class="estado ativo">
+    <h3 class="section-title">Senha Atual:</h3>
+      <div class="senha" id="senha-atual">
+        <!-- Dinamicamente preenchido depois -->
+        <div class="digit">A</div>
+        <div class="digit">0</div>
+        <div class="digit">7</div>
+        <div class="digit">8</div>
       </div>
+      <h3 class="section-title">Fila De Espera</h3>
+      <button class="senha-btn" onclick="mostrarEstadoRetirado()">Retirar Senha</button>
     </div>
 
-    <!-- Fila de Espera -->
-    <div class="queue">
-       <div class="ticket-icon">
-            <img src="/imagens/ticket_black_transparent.png" alt="Ticket" />
-       </div>
-      <p>Fila De Espera</p>
-      <div class="queue-count">10 Pessoas</div>
+    <div id="estado-retirado" class="estado">
+      <h3 class="section-title">Senha Atual:</h3>
+      <div class="senha">
+        <div class="digit">A</div>
+        <div class="digit">0</div>
+        <div class="digit">7</div>  
+        <div class="digit">8</div>
+      </div>
+      <h3 class="section-title">Minha Senha:</h3>
+      <div class="senha" id="senha-user">
+        <div class="digit">A</div>
+        <div class="digit">0</div>
+        <div class="digit">9</div>
+        <div class="digit">2</div>
+      </div>
+      <h3 class="section-title">Tempo estimado:</h3>
+      <button class="tempo-btn">3min</button>
+      <button class="cancel-btn" onclick="voltarParaEstadoInicial()">Cancelar Senha</button>
     </div>
-
-    <!-- Botão Retirar Senha -->
-    <button class="btn-withdraw">Retirar Senha</button>
   </main>
+
+  <script>
+    function mostrarEstadoRetirado() {
+      const inicial = document.getElementById("estado-inicial");
+      const retirado = document.getElementById("estado-retirado");
+
+      inicial.classList.remove("ativo");
+      setTimeout(() => {
+        inicial.style.display = "none";
+        retirado.style.display = "block";
+        setTimeout(() => {
+          retirado.classList.add("ativo");
+        }, 10);
+      }, 300);
+    }
+
+    function voltarParaEstadoInicial() {
+    const inicial = document.getElementById("estado-inicial");
+    const retirado = document.getElementById("estado-retirado");
+
+    retirado.classList.remove("ativo");
+    setTimeout(() => {
+      retirado.style.display = "none";
+      inicial.style.display = "block";
+      setTimeout(() => {
+        inicial.classList.add("ativo");
+      }, 10);
+    }, 300);
+  }
+
+    // ✅ Futuro: Preencher dinamicamente com JS ou backend
+    /*
+    const senhaAtual = "A078";
+    const minhaSenha = "A092";
+
+    function preencherSenha(containerId, senha) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      senha.split('').forEach(char => {
+        const div = document.createElement('div');
+        div.className = 'digit';
+        div.textContent = char;
+        container.appendChild(div);
+      });
+    }
+
+    preencherSenha('senha-atual', senhaAtual);
+    preencherSenha('senha-user', minhaSenha);
+    */
+  </script>
 
 </body>
 </html>
