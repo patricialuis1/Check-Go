@@ -8,7 +8,7 @@ main h2 {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #828282;
+  color: #000;
 }
 
 main p {
@@ -39,7 +39,7 @@ main h3 {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 2rem;
-  color: #828282;
+  color: #000;
 }
 
 /* ETAPAS */
@@ -72,7 +72,7 @@ main h3 {
 .step h4 {
   font-size: 0.95rem;
   margin-bottom: 0.4rem;
-  color: #828282;
+  color: #000;
 }
 
 .step p {
