@@ -1,0 +1,102 @@
+/* menuTrabalhador.css */
+
+body {
+    background-color: #ffffff; /* Fundo branco */
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+    
+  /* === TELA PRINCIPAL === */
+  .main {
+    background: #00695c;
+    color: white;
+    text-align: center;
+    border: 3px solid #000;            
+    display: flex;                    
+    flex-direction: column;              
+    align-items: center;
+    padding: 40px 20px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 380px;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid #000;
+  }
+  
+  .title {
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+  
+  .subtitle {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  /* Ícone do ticket */
+  .ticket-icon {
+    width: 80px;
+    height: 60px;
+    margin: 30px auto;
+    position: relative;
+  }
+  
+  .ticket-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  /* Senha atual */
+  .password-label {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .password {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  
+  .digit {
+    width: 50px;
+    height: 60px;
+    background: white;
+    color: #00695c;
+    font-size: 32px;
+    font-weight: bold;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Botão */
+  .btn-next {
+    background: #d84315;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 80%;
+    max-width: 280px;
+  }
+  
+  .btn-next:hover {
+    width: 80%;
+    max-width: 280px;
+    background: #e65100;
+  } 

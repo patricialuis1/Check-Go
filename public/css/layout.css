@@ -12,10 +12,7 @@ body {
   line-height: 1.6;
 }
 
-header {
-  background-color: #00c271;
-  padding: 0; 
-}
+
 
 /* HEADER */
 header {
@@ -35,44 +32,7 @@ header {
 }
 
 
-/* LOGO COM TEXTO */
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  line-height: 1;
-}
 
-.logo-area img {
-  height: 36px;
-  width: auto;
-  display: block;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.1;
-  margin: 0;
-}
-
-.logo-text strong {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #000;
-  margin: 0;
-  padding: 0;
-  line-height: 1.1;
-}
-
-.logo-text small {
-  font-size: 0.65rem;
-  color: #000;
-  margin: 0;
-  padding: 0;
-  line-height: 1.1;
-}
 
 
 /* NAVIGATION LINKS */
