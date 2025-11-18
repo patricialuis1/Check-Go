@@ -1,7 +1,7 @@
 {
   "name": "checkandgo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Projeto com conexão em tempo real com **Supabase**, CI/CD automático via **GitHub Actions**.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@supabase/supabase-js": "^2.76.1",
+    "@supabase/supabase-js": "^2.82.0",
     "dotenv": "^17.2.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patricialuis1/Check-Go.git"
+  },
+  "bugs": {
+    "url": "https://github.com/patricialuis1/Check-Go/issues"
+  },
+  "homepage": "https://github.com/patricialuis1/Check-Go#readme"
 }

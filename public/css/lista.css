@@ -1,11 +1,10 @@
-/* ---------- MAIN: PÁGINA SERVIÇOS ---------- */
+/* ========= MAIN: PÁGINA SERVIÇOS ========= */
 
 .conteudo-servicos {
-  /* já tens padding em .area-conteudo, por isso aqui é leve */
   background-color: #f7f7f7;
 }
 
-/* Secção principal */
+/* Caixa branca principal */
 
 .conteudo-servicos .secao-servicos {
   background-color: #ffffff;
@@ -14,7 +13,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-/* Topo: título + ações (botão adicionar, ícone) */
+/* Topo */
 
 .conteudo-servicos .cabecalho-servicos {
   display: flex;
@@ -46,7 +45,7 @@
   cursor: pointer;
 }
 
-/* Placeholder para o ícone (podes meter img dentro do botão e tirar isto) */
+/* só para ter “cara” de ícone, podes trocar por uma imagem */
 .conteudo-servicos .icone-filtro {
   width: 14px;
   height: 14px;
@@ -78,7 +77,7 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
 }
 
-/* ---------- TABELA / LISTA ---------- */
+/* ========= TABELA / LISTA ========= */
 
 .conteudo-servicos .tabela-servicos {
   margin-top: 10px;
@@ -87,7 +86,7 @@
   background-color: #f8f8f8;
 }
 
-/* Linha base */
+/* Cabeçalho */
 
 .conteudo-servicos .linha-tabela {
   display: grid;
@@ -96,8 +95,6 @@
   padding: 10px 18px;
   column-gap: 12px;
 }
-
-/* Cabeçalho */
 
 .conteudo-servicos .linha-tabela-cabecalho {
   background-color: #f2f2f2;
@@ -110,7 +107,13 @@
   padding: 4px 0;
 }
 
-/* Linhas de dados */
+/* Corpo da tabela – as linhas dinâmicas vão aqui */
+
+.conteudo-servicos .tabela-servicos-corpo {
+  background-color: #ffffff;
+}
+
+/* Estilo base de cada linha de serviço */
 
 .conteudo-servicos .linha-servico {
   background-color: #ffffff;
@@ -121,18 +124,16 @@
   border-bottom: none;
 }
 
-/* Link que envolve as 3 primeiras colunas (para editar ao clicar na linha) */
-
-.conteudo-servicos .link-linha-servico {
-  display: contents; /* mantém o grid mas torna o link clicável na linha toda (nestas colunas) */
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Hover da linha (efeito só nas células de dados) */
-
 .conteudo-servicos .linha-servico:hover {
   background-color: #fafafa;
+}
+
+/* Link que envolve as colunas de dados (ID, nome, descrição) */
+
+.conteudo-servicos .link-linha-servico {
+  display: contents; /* permite que as colunas continuem no grid */
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Colunas */
@@ -160,7 +161,7 @@
   gap: 10px;
 }
 
-/* ---------- BOTÕES DE AÇÃO (EDITAR / APAGAR) ---------- */
+/* Botões de ação (editar/apagar) */
 
 .conteudo-servicos .botao-acao-servico {
   width: 28px;
@@ -181,15 +182,7 @@
   object-fit: contain;
 }
 
-.conteudo-servicos .botao-acao-editar {
-  /* se quiseres cores diferentes por ação, define aqui */
-}
-
-.conteudo-servicos .botao-acao-apagar {
-  border-color: #ffb54c;
-}
-
-/* ---------- MODAL DE APAGAR (CSS PURO) ---------- */
+/* ========= MODAL APAGAR ========= */
 
 .conteudo-servicos .modal-apagar {
   position: fixed;
@@ -204,7 +197,6 @@
   z-index: 50;
 }
 
-/* Quando o elemento é “target” (ex: href="#modal-apagar-servico") */
 .conteudo-servicos .modal-apagar:target {
   opacity: 1;
   pointer-events: auto;
@@ -257,7 +249,7 @@
   color: #ffffff;
 }
 
-/* ---------- RESPONSIVO ---------- */
+/* ========= RESPONSIVO ========= */
 
 @media (max-width: 900px) {
   .conteudo-servicos .linha-tabela {

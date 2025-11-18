@@ -1,0 +1,112 @@
+/* ====================== PÁGINA CRIAR SERVIÇO - EXATAMENTE COMO O PRINT ====================== */
+
+.area-conteudo {
+    padding: 40px 60px;
+    background: #f9f9f9;               /* fundo cinzento-claro da área principal */
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  /* Título da página */
+  .pagina-titulo h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 32px;
+  }
+  
+  /* Container branco do formulário */
+  .formulario-container {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 48px 60px;
+    width: 100%;
+    max-width: 800px;                   /* largura exata do print */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eaeaea;
+  }
+  
+  /* Labels */
+  .campo-form label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  
+  /* Inputs e Textarea */
+  .campo-form input,
+  .campo-form textarea {
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f7f7f7;               /* fundo cinzento-claro igual ao print */
+    font-size: 15px;
+    transition: all 0.2s;
+  }
+  
+  .campo-form input:focus,
+  .campo-form textarea:focus {
+    outline: none;
+    border-color: #00c271;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 194, 113, 0.1);
+  }
+  
+  .campo-form textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  /* Botões */
+  .botoes-form {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  
+  .btn-cancelar {
+    padding: 12px 28px;
+    background: transparent;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    color: #777;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-cancelar:hover {
+    background: #f0f0f0;
+    border-color: #999;
+  }
+  
+  .btn-salvar {
+    padding: 12px 36px;
+    background: #00c271;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+  }
+  
+  .btn-salvar:hover {
+    background: #00a35c;
+  }
+  
+  /* Ícone de check no botão Save (opcional - igual ao print) */
+  .btn-salvar::before {
+    content: "✓";
+    font-weight: bold;
+  }
