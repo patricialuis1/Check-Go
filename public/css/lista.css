@@ -1,0 +1,271 @@
+/* ---------- MAIN: PÁGINA SERVIÇOS ---------- */
+
+.conteudo-servicos {
+  /* já tens padding em .area-conteudo, por isso aqui é leve */
+  background-color: #f7f7f7;
+}
+
+/* Secção principal */
+
+.conteudo-servicos .secao-servicos {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px 24px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Topo: título + ações (botão adicionar, ícone) */
+
+.conteudo-servicos .cabecalho-servicos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.conteudo-servicos .titulo-servicos {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.conteudo-servicos .acoes-servicos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.conteudo-servicos .botao-icone-servicos {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Placeholder para o ícone (podes meter img dentro do botão e tirar isto) */
+.conteudo-servicos .icone-filtro {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 2px solid #f2b200;
+  position: relative;
+}
+.conteudo-servicos .icone-filtro::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 2px;
+  background: #f2b200;
+  right: -4px;
+  bottom: -2px;
+  transform: rotate(45deg);
+}
+
+.conteudo-servicos .botao-primario-servicos {
+  padding: 8px 20px;
+  border-radius: 4px;
+  background-color: #f2b200;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- TABELA / LISTA ---------- */
+
+.conteudo-servicos .tabela-servicos {
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f8f8f8;
+}
+
+/* Linha base */
+
+.conteudo-servicos .linha-tabela {
+  display: grid;
+  grid-template-columns: 80px minmax(160px, 1.5fr) minmax(220px, 2fr) 120px;
+  align-items: center;
+  padding: 10px 18px;
+  column-gap: 12px;
+}
+
+/* Cabeçalho */
+
+.conteudo-servicos .linha-tabela-cabecalho {
+  background-color: #f2f2f2;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888888;
+}
+
+.conteudo-servicos .linha-tabela-cabecalho .coluna-tabela {
+  padding: 4px 0;
+}
+
+/* Linhas de dados */
+
+.conteudo-servicos .linha-servico {
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.conteudo-servicos .linha-servico:last-child {
+  border-bottom: none;
+}
+
+/* Link que envolve as 3 primeiras colunas (para editar ao clicar na linha) */
+
+.conteudo-servicos .link-linha-servico {
+  display: contents; /* mantém o grid mas torna o link clicável na linha toda (nestas colunas) */
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hover da linha (efeito só nas células de dados) */
+
+.conteudo-servicos .linha-servico:hover {
+  background-color: #fafafa;
+}
+
+/* Colunas */
+
+.conteudo-servicos .coluna-tabela {
+  font-size: 14px;
+}
+
+.conteudo-servicos .coluna-id {
+  text-align: left;
+  color: #777777;
+}
+
+.conteudo-servicos .coluna-nome {
+  font-weight: 500;
+}
+
+.conteudo-servicos .coluna-descricao {
+  color: #777777;
+}
+
+.conteudo-servicos .coluna-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ---------- BOTÕES DE AÇÃO (EDITAR / APAGAR) ---------- */
+
+.conteudo-servicos .botao-acao-servico {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #ffd36c;
+  background-color: #fff7df;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.conteudo-servicos .botao-acao-servico img {
+  max-width: 70%;
+  max-height: 70%;
+  object-fit: contain;
+}
+
+.conteudo-servicos .botao-acao-editar {
+  /* se quiseres cores diferentes por ação, define aqui */
+}
+
+.conteudo-servicos .botao-acao-apagar {
+  border-color: #ffb54c;
+}
+
+/* ---------- MODAL DE APAGAR (CSS PURO) ---------- */
+
+.conteudo-servicos .modal-apagar {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 50;
+}
+
+/* Quando o elemento é “target” (ex: href="#modal-apagar-servico") */
+.conteudo-servicos .modal-apagar:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.conteudo-servicos .modal-caixa {
+  width: 100%;
+  max-width: 380px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px 22px 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.conteudo-servicos .modal-titulo {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.conteudo-servicos .modal-texto {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 18px;
+}
+
+.conteudo-servicos .modal-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.conteudo-servicos .botao-modal {
+  padding: 7px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.conteudo-servicos .botao-modal-secundario {
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+.conteudo-servicos .botao-modal-perigo {
+  background-color: #ff4d4f;
+  color: #ffffff;
+}
+
+/* ---------- RESPONSIVO ---------- */
+
+@media (max-width: 900px) {
+  .conteudo-servicos .linha-tabela {
+    grid-template-columns: 60px minmax(120px, 1.5fr) minmax(160px, 2fr) 90px;
+    padding-inline: 12px;
+  }
+
+  .conteudo-servicos .modal-caixa {
+    margin-inline: 16px;
+  }
+}

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Check&Go - Administração</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/lista.css" />
+  <link rel="stylesheet" href="/css/layoutAdmin.css" />
+</head>
+<body>
+  <div class="layout-principal">
+    <!-- BARRA LATERAL -->
+    <aside class="barra-lateral">
+      <div class="cabecalho-lateral">
+        <span class="linha-titulo"></span>
+        <span class="titulo-lateral">Administração</span>
+      </div>
+
+      <div class="cartao-logo">
+        <img src="/imagens/Check_Go__3_-removebg-preview.png"
+             alt="Logo Check&Go"
+             class="imagem-logo" />
+      </div>
+
+      <div class="secao-utilizador">
+        <div class="nome-utilizador">Tomás Ribeiro</div>
+        <div class="cargo-utilizador">Admin</div>
+      </div>
+
+      <nav class="menu-lateral">
+        <a href="/views/admin/dashboard.html" class="item-menu item-menu-ativo">
+          <span class="icone-menu">
+            <img src="/imagens/icons/home.png" alt="Home">
+          </span>
+          <span class="texto-menu">Home</span>
+        </a>
+
+        <a href="/views/admin/abaServico/listaLoja.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/lojas.png" alt="Lojas">
+          </span>
+          <span class="texto-menu">Lojas</span>
+        </a>
+
+        <a href="/views/admin/abaServico/listaColaborador.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/colaborador.png" alt="Colaboradores">
+          </span>
+          <span class="texto-menu">Colaboradores</span>
+        </a>
+
+        <a href="/views/admin/abaServico/listaServico.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/servicos.png" alt="Serviços">
+          </span>
+          <span class="texto-menu">Serviços</span>
+        </a>
+
+        <a href="/views/colaborador/escolherservico.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/voltarColab.png" alt="Voltar como Colab">
+          </span>
+          <span class="texto-menu">Voltar como Colab</span>
+        </a>
+      </nav>
+
+      <div class="rodape-lateral">
+        <a href="/logout" class="link-logout">
+          <span class="texto-logout">Logout</span>
+          <span class="icone-logout">
+            <img src="/imagens/icons/logout.png" alt="Logout">
+          </span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+<main class="area-conteudo conteudo-servicos">
+  <section class="secao-servicos">
+    <!-- TOPO DA LISTA -->
+    <header class="cabecalho-servicos">
+      <h1 class="titulo-servicos">Lista de Serviços</h1>
+
+      <div class="acoes-servicos">
+        <!-- Botão/ícone extra (por ex. para ordenar/filtros) -->
+        <button type="button" class="botao-icone-servicos" aria-label="Ordenar">
+          <!-- aqui podes meter um ícone SVG ou img -->
+          <span class="icone-filtro"></span>
+        </button>
+
+        <a href="/admin/lojas/adicionar.html" class="botao-primario-servicos">
+          Adicionar Loja
+        </a>
+      </div>
+    </header>
+
+    <!-- TABELA/LISTA -->
+    <div class="tabela-servicos">
+      <!-- Cabeçalho -->
+      <div class="linha-tabela linha-tabela-cabecalho">
+        <div class="coluna-tabela coluna-id">ID</div>
+        <div class="coluna-tabela coluna-nome">Nome</div>
+        <div class="coluna-tabela coluna-descricao">Descrição</div>
+        <div class="coluna-tabela coluna-acoes">Ações</div>
+      </div>
+
+      <!-- Cada linha de serviço (exemplo estático, depois tornas dinâmico) -->
+      <div class="linha-tabela linha-servico" data-servico-id="1">
+        <!-- Clicar em qualquer parte da linha pode abrir a página de edição -->
+        <a href="/admin/servicos/editar.html?id=1" class="link-linha-servico">
+          <div class="coluna-tabela coluna-id">1</div>
+          <div class="coluna-tabela coluna-nome">Padaria</div>
+          <div class="coluna-tabela coluna-descricao">Lorem ipsum</div>
+        </a>
+
+        <div class="coluna-tabela coluna-acoes">
+          <a href="/admin/servicos/editar.html?id=1"
+             class="botao-acao-servico botao-acao-editar"
+             aria-label="Editar serviço 1">
+            <!-- ícone editar -->
+            <img src="/imagens/icons/editar.png" alt="Editar">
+          </a>
+
+          <a href="#modal-apagar-servico"
+             class="botao-acao-servico botao-acao-apagar"
+             aria-label="Apagar serviço 1">
+            <!-- ícone apagar -->
+            <img src="/imagens/icons/apagar.png" alt="Apagar">
+          </a>
+        </div>
+      </div>
+
+      <div class="linha-tabela linha-servico" data-servico-id="2">
+        <a href="/admin/servicos/editar.html?id=2" class="link-linha-servico">
+          <div class="coluna-tabela coluna-id">2</div>
+          <div class="coluna-tabela coluna-nome">Talho</div>
+          <div class="coluna-tabela coluna-descricao">Lorem ipsum</div>
+        </a>
+        <div class="coluna-tabela coluna-acoes">
+          <a href="/admin/servicos/editar.html?id=2"
+             class="botao-acao-servico botao-acao-editar">
+            <img src="/imagens/icons/editar.png" alt="Editar">
+          </a>
+          <a href="#modal-apagar-servico"
+             class="botao-acao-servico botao-acao-apagar">
+            <img src="/imagens/icons/apagar.png" alt="Apagar">
+          </a>
+        </div>
+      </div>
+
+      <div class="linha-tabela linha-servico" data-servico-id="3">
+        <a href="/admin/servicos/editar.html?id=3" class="link-linha-servico">
+          <div class="coluna-tabela coluna-id">3</div>
+          <div class="coluna-tabela coluna-nome">Peixaria</div>
+          <div class="coluna-tabela coluna-descricao">Lorem ipsum</div>
+        </a>
+        <div class="coluna-tabela coluna-acoes">
+          <a href="/admin/servicos/editar.html?id=3"
+             class="botao-acao-servico botao-acao-editar">
+            <img src="/imagens/icons/editar.png" alt="Editar">
+          </a>
+          <a href="#modal-apagar-servico"
+             class="botao-acao-servico botao-acao-apagar">
+            <img src="/imagens/icons/apagar.png" alt="Apagar">
+          </a>
+        </div>
+      </div>
+
+      <div class="linha-tabela linha-servico" data-servico-id="4">
+        <a href="/admin/servicos/editar.html?id=4" class="link-linha-servico">
+          <div class="coluna-tabela coluna-id">4</div>
+          <div class="coluna-tabela coluna-nome">Pastelaria</div>
+          <div class="coluna-tabela coluna-descricao">Lorem ipsum</div>
+        </a>
+        <div class="coluna-tabela coluna-acoes">
+          <a href="/admin/servicos/editar.html?id=4"
+             class="botao-acao-servico botao-acao-editar">
+            <img src="/imagens/icons/editar.png" alt="Editar">
+          </a>
+          <a href="#modal-apagar-servico"
+             class="botao-acao-servico botao-acao-apagar">
+            <img src="/imagens/icons/apagar.png" alt="Apagar">
+          </a>
+        </div>
+      </div>
+
+      <div class="linha-tabela linha-servico" data-servico-id="5">
+        <a href="/admin/servicos/editar.html?id=5" class="link-linha-servico">
+          <div class="coluna-tabela coluna-id">5</div>
+          <div class="coluna-tabela coluna-nome">Atendimento Geral</div>
+          <div class="coluna-tabela coluna-descricao">Lorem ipsum</div>
+        </a>
+        <div class="coluna-tabela coluna-acoes">
+          <a href="/admin/servicos/editar.html?id=5"
+             class="botao-acao-servico botao-acao-editar">
+            <img src="/imagens/icons/editar.png" alt="Editar">
+          </a>
+          <a href="#modal-apagar-servico"
+             class="botao-acao-servico botao-acao-apagar">
+            <img src="/imagens/icons/apagar.png" alt="Apagar">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL DE CONFIRMAÇÃO DE DELETE (CSS puro com :target) -->
+  <div class="modal-apagar" id="modal-apagar-servico">
+    <div class="modal-caixa">
+      <h2 class="modal-titulo">Apagar serviço</h2>
+      <p class="modal-texto">
+        Tem a certeza que pretende apagar este serviço? Esta ação não pode ser desfeita.
+      </p>
+
+      <div class="modal-botoes">
+        <!-- Volta à página (fecha modal) -->
+        <a href="#" class="botao-modal botao-modal-secundario">Cancelar</a>
+
+        <!-- Aqui depois ligas via JS para apagar o ID correto -->
+        <button type="button" class="botao-modal botao-modal-perigo">
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+  </div>
+</body>
+</html>

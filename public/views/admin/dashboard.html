@@ -2,57 +2,105 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Administração - Check&Go</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-  <link rel="stylesheet" href="/css/layoutAdmin.css" />
+  <title>Check&Go - Administração</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/dashboardAdmin.css" />
+  <link rel="stylesheet" href="/css/layoutAdmin.css" />
 </head>
 <body>
-  <div class="dashboard-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="logo-section">
-        <img src="/imagens/Check_Go__3_-removebg-preview.png" alt="Logo Check&Go" />
+  <div class="layout-principal">
+    <!-- BARRA LATERAL -->
+    <aside class="barra-lateral">
+      <div class="cabecalho-lateral">
+        <span class="linha-titulo"></span>
+        <span class="titulo-lateral">Administração</span>
       </div>
-      <div class="user-info">
-        <p class="username">Tomás Ribeiro</p>
-        <p class="user-role">Admin</p>
+
+      <div class="cartao-logo">
+        <img src="/imagens/Check_Go__3_-removebg-preview.png"
+             alt="Logo Check&Go"
+             class="imagem-logo" />
       </div>
-      <nav class="nav-menu">
-        <a href="#" class="nav-item active"><span class="icon">🏠</span> Home</a>
-        <a href="#" class="nav-item"><span class="icon">🏬</span> Lojas</a>
-        <a href="#" class="nav-item"><span class="icon">👥</span> Colaboradores</a>
-        <a href="#" class="nav-item"><span class="icon">📋</span> Serviços</a>
-        <a href="#" class="nav-item"><span class="icon">🔄</span> Voltar como Colab</a>
+
+      <div class="secao-utilizador">
+        <div class="nome-utilizador">Tomás Ribeiro</div>
+        <div class="cargo-utilizador">Admin</div>
+      </div>
+
+      <nav class="menu-lateral">
+        <a href="/views/admin/dashboard.html" class="item-menu item-menu-ativo">
+          <span class="icone-menu">
+            <img src="/imagens/icons/home.png" alt="Home">
+          </span>
+          <span class="texto-menu">Home</span>
+        </a>
+
+        <a href="/views/admin/abaServico/listaLoja.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/lojas.png" alt="Lojas">
+          </span>
+          <span class="texto-menu">Lojas</span>
+        </a>
+
+        <a href="/views/admin/abaServico/listaColaborador.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/colaborador.png" alt="Colaboradores">
+          </span>
+          <span class="texto-menu">Colaboradores</span>
+        </a>
+
+        <a href="/views/admin/abaServico/listaServico.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/servicos.png" alt="Serviços">
+          </span>
+          <span class="texto-menu">Serviços</span>
+        </a>
+
+        <a href="/views/colaborador/escolherservico.html" class="item-menu">
+          <span class="icone-menu">
+            <img src="/imagens/icons/voltarColab.png" alt="Voltar como Colab">
+          </span>
+          <span class="texto-menu">Voltar como Colab</span>
+        </a>
       </nav>
-      <a href="#" class="logout"><span class="icon">🚪</span> Logout</a>
+
+      <div class="rodape-lateral">
+        <a href="/logout" class="link-logout">
+          <span class="texto-logout">Logout</span>
+          <span class="icone-logout">
+            <img src="/imagens/icons/logout.png" alt="Logout">
+          </span>
+        </a>
+      </div>
     </aside>
 
-    <!-- Main Area -->
-    <main class="main-content">
-      <header class="main-header">
-        <h1>Administração</h1>
-        <div class="header-tools">
-          <button class="help-btn">❓</button>
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="notif-btn">🔔</button>
-        </div>
-      </header>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="area-conteudo">
+      <section class="painel-resumo">
+        <a href="/views/admin/abaServico/listaColaborador.html" class="cartao-resumo cartao-azul">
+          <div class="icone-cartao">
+            <img src="/imagens/icons/colaborador.png" alt="Colaboradores">
+          </div>
+          <div class="legenda-cartao">Colaboradores</div>
+          <div class="valor-cartao">243</div>
+        </a>
 
-      <section class="cards-section">
-        <div class="card card-colabs">
-          <p>Colaboradores</p>
-          <h2>243</h2>
-        </div>
-        <div class="card card-lojas">
-          <p>Lojas</p>
-          <h2>82</h2>
-        </div>
-        <div class="card card-servicos">
-          <p>Serviços</p>
-          <h2>12</h2>
-        </div>
+        <a href="/views/admin/abaServico/listaLoja.html" class="cartao-resumo cartao-rosa">
+          <div class="icone-cartao">
+            <img src="/imagens/icons/lojas.png" alt="Lojas">
+          </div>
+          <div class="legenda-cartao">Lojas</div>
+          <div class="valor-cartao">82</div>
+        </a>
+
+        <a href="/views/admin/abaServico/listaServico.html" class="cartao-resumo cartao-verde">
+          <div class="icone-cartao">
+            <img src="/imagens/icons/servicos.png" alt="Serviços">
+          </div>
+          <div class="legenda-cartao">Serviços</div>
+          <div class="valor-cartao">12</div>
+        </a>
       </section>
     </main>
   </div>
