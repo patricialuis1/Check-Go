@@ -1,0 +1,85 @@
+.container {
+    padding: 40px 60px;
+    min-height: 100vh;
+    align-items: center;
+}
+
+/* Título*/
+.titulo {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 40px 0;
+    text-align: left;
+}
+
+/* Botões Update e Delete */
+.acoes {
+    margin-bottom: 32px;
+}
+
+.btn-update,
+.btn-delete {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-right: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-update {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-update:hover {
+    background-color: #2563eb;
+}
+
+.btn-delete {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #dc2626;
+}
+
+/* Tabela de detalhes */
+.detalhes {
+    width: 100%;
+    max-width: 900px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.linha {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid #e2e8f0;
+    align-items: flex-start;
+}
+
+.linha:last-child {
+    border-bottom: none;
+}
+
+.label {
+    width: 140px;
+    flex-shrink: 0;
+    font-weight: 500;
+    color: #4a5568;
+    font-size: 15px;
+}
+
+.valor {
+    flex: 1;
+    color: #2d3748;
+    font-size: 15px;
+    word-break: break-word;
+    padding-left: 20px;
+}

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin- Criar Serviço</title>
+    <title>Admin- Detalhes Serviço</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/criarServico.css" />
+    <link rel="stylesheet" href="/css/detalhesServico.css" />
     <link rel="stylesheet" href="/css/layoutAdmin.css" />
 </head>
 <body>
@@ -74,33 +74,25 @@
             </a>
           </div>
         </aside>
-<!--CRIAR SERVIÇO -->
-    <main class="area-conteudo estilo-limpo">
-      <div class="pagina-titulo">
-          <h1>Criar Serviço</h1>
-      </div>
+<!--DETALHE SERVIÇO -->
+    <main class="container">
+        <h1 class="titulo">Ver Serviço</h1>
 
-      <div class="formulario-container">
-          <form class="form-criar-servico" action="/admin/servicos/criar" method="POST">
-              
-              <div class="campo-form">
-                  <label for="nome">Nome</label>
-                  <input type="text" id="nome" name="nome" placeholder="type here" required />
-              </div>
+        <div class="acoes">
+            <a href="#" class="btn-update">Update</a>
+            <a href="#" class="btn-delete">Delete</a>
+        </div>
 
-              <div class="campo-form">
-                  <label for="descricao">Descrição</label>
-                  <textarea id="descricao" name="descricao" rows="5" placeholder="type here"></textarea>
-              </div>
-
-              <div class="botoes-form">
-                  <button type="button" class="btn-cancelar">Cancel</button>
-                  <button type="submit" class="btn-salvar">
-                      <span class="icone-salvar"></span> Save
-                  </button>
-              </div>
-          </form>
-      </div>
+        <div class="detalhes">
+            <div class="linha">
+                <span class="label">Nome</span>
+                <span class="valor">Pastelaria</span>
+            </div>
+            <div class="linha">
+                <span class="label">Descrição</span>
+                <span class="valor">Lorem ipsum</span>
+            </div>
+        </div>
     </main>
 </body>
 </html>

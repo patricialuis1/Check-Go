@@ -1,0 +1,99 @@
+.container {       
+    padding: 40px 60px;
+    min-height: 100vh;
+    align-items: center;
+}
+
+/* Título*/
+.titulo {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 40px 0;
+    text-align: left;
+}
+
+
+/* Formulário */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 50px;
+    gap: 28px;
+    max-width: 720px;           
+}
+
+/* Cada campo*/
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    font-weight: 500;
+    font-size: 15px;
+    color: #4a5568;
+}
+
+.campo input,
+.campo textarea {
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #2d3748;
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #a0aec0;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: #68d391;
+    box-shadow: 0 0 0 3px rgba(104, 211, 145, 0.15);
+}
+
+.campo textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Botões */
+.botoes {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    justify-content: left;
+}
+
+.btn-save {
+    padding: 12px 32px;
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #38a169;
+}
+
+.icone-check {
+    width: 16px;
+    height: 16px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M21 7L9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7z'/%3E%3C/svg%3E") center/contain no-repeat;
+    display: inline-block;
+}
