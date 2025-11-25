@@ -5,9 +5,11 @@
   <title>Check&Go - Administração</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/lista.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/CRUD/lista.css" />
   <link rel="stylesheet" href="/css/layoutAdmin.css" />
 </head>
+<script type="module" src="/js/servico/listaServico.js"></script>
 <body>
   <div class="layout-principal">
     <!-- BARRA LATERAL -->
@@ -87,7 +89,7 @@
           <span class="icone-filtro"></span>
         </button>
 
-        <a href="/admin/servicos/adicionar.html" class="botao-primario-servicos">
+        <a href="/views/admin/abaServico/criarServico.html" class="botao-primario-servicos">
           Adicionar Serviço
         </a>
       </div>
@@ -105,30 +107,9 @@
 
       <!-- Corpo da lista – fica VAZIO, será preenchido via JSON -->
       <div class="tabela-servicos-corpo" id="lista-servicos">
-        <!--
-        Exemplo de linha que o teu código (PHP/JS/etc) deve gerar:
+        
 
-        <div class="linha-tabela linha-servico" data-servico-id="1">
-          <a href="/admin/servicos/editar.html?id=1" class="link-linha-servico">
-            <div class="coluna-tabela coluna-id">1</div>
-            <div class="coluna-tabela coluna-nome">Padaria</div>
-            <div class="coluna-tabela coluna-descricao">Lorem ipsum</div>
-          </a>
-
-          <div class="coluna-tabela coluna-acoes">
-            <a href="/admin/servicos/editar.html?id=1"
-               class="botao-acao-servico botao-acao-editar">
-              <img src="/imagens/icons/editar.png" alt="Editar">
-            </a>
-
-            <a href="#modal-apagar-servico"
-               class="botao-acao-servico botao-acao-apagar"
-               data-id="1">
-              <img src="/imagens/icons/apagar.png" alt="Apagar">
-            </a>
-          </div>
-        </div>
-        -->
+        
       </div>
     </div>
   </section>

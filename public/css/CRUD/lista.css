@@ -1,7 +1,16 @@
 /* ========= MAIN: PÁGINA SERVIÇOS ========= */
 
 .conteudo-servicos {
-  background-color: #f7f7f7;
+  background-color: #ffffff;
+  display: flex;
+}
+
+.area-conteudo.conteudo-servicos {
+  flex: 1;                    /* estica no flex */
+  width: 100%;
+  max-width: none;            /* remove limites vindos do layout */
+  margin: 0;                  /* remove centragem/margens */
+  box-sizing: border-box;
 }
 
 /* Caixa branca principal */
@@ -11,6 +20,9 @@
   border-radius: 12px;
   padding: 20px 24px 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
 }
 
 /* Topo */
@@ -45,7 +57,6 @@
   cursor: pointer;
 }
 
-/* só para ter “cara” de ícone, podes trocar por uma imagem */
 .conteudo-servicos .icone-filtro {
   width: 14px;
   height: 14px;
@@ -84,6 +95,7 @@
   border-radius: 10px;
   overflow: hidden;
   background-color: #f8f8f8;
+  width: 100%;
 }
 
 /* Cabeçalho */
