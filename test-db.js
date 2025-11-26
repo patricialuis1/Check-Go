@@ -1,7 +1,10 @@
-require('dotenv').config();
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 // test-supabase.js
-const { createClient } = require('@supabase/supabase-js');
+import { createClient } from '@supabase/supabase-js'
+
 
 // Configuração da conexão (usa variáveis de ambiente em produção!)
 const supabaseUrl = process.env.SUPABASE_URL;
