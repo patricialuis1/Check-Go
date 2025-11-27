@@ -1,0 +1,135 @@
+
+
+/* caixa toda (igual à .tabela-servicos) */
+.conteudo-servicos table.tabela-admin,
+.conteudo-servicos table.tabela-lojas {
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f8f8f8;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* mantém colunas estáveis */
+}
+
+/* cabeçalho (equivalente à .linha-tabela-cabecalho) */
+.conteudo-servicos table.tabela-admin thead th,
+.conteudo-servicos table.tabela-lojas thead th {
+  background-color: #f2f2f2;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888888;
+  padding: 10px 18px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+/* corpo (equivalente à .tabela-servicos-corpo + .linha-servico) */
+.conteudo-servicos table.tabela-admin tbody tr,
+.conteudo-servicos table.tabela-lojas tbody tr {
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.conteudo-servicos table.tabela-admin tbody tr:last-child,
+.conteudo-servicos table.tabela-lojas tbody tr:last-child {
+  border-bottom: none;
+}
+
+.conteudo-servicos table.tabela-admin tbody tr:hover,
+.conteudo-servicos table.tabela-lojas tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* células base (equivalente à .coluna-tabela) */
+.conteudo-servicos table.tabela-admin td,
+.conteudo-servicos table.tabela-lojas td {
+  font-size: 14px;
+  padding: 10px 18px;
+  vertical-align: middle;
+}
+
+/* cores e pesos iguais ao print */
+.conteudo-servicos table.tabela-admin td:nth-child(1),
+.conteudo-servicos table.tabela-lojas td:nth-child(1){
+  color:#777777; /* coluna ID */
+}
+
+.conteudo-servicos table.tabela-admin td:nth-child(2),
+.conteudo-servicos table.tabela-lojas td:nth-child(2){
+  font-weight:500; /* coluna nome */
+}
+
+.conteudo-servicos table.tabela-admin td:nth-child(3),
+.conteudo-servicos table.tabela-lojas td:nth-child(3){
+  color:#777777;        /* descrição/morada */
+  white-space: normal; /* pode quebrar */
+  word-break: break-word;
+}
+
+/* ações alinhadas à direita (equivalente à .coluna-acoes) */
+.conteudo-servicos table.tabela-admin th:last-child,
+.conteudo-servicos table.tabela-admin td:last-child,
+.conteudo-servicos table.tabela-lojas th:last-child,
+.conteudo-servicos table.tabela-lojas td:last-child{
+  text-align:right;
+  white-space:nowrap;
+}
+
+/* botões redondos amarelos (equivalente à .botao-acao-servico) */
+.conteudo-servicos table.tabela-admin .btn-acao,
+.conteudo-servicos table.tabela-lojas .btn-acao{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #ffd36c;
+  background-color: #fff7df;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.conteudo-servicos table.tabela-admin .btn-acao i,
+.conteudo-servicos table.tabela-lojas .btn-acao i{
+  font-size: 14px;
+}
+
+/* links dentro da coluna nome, sem azul default */
+.conteudo-servicos table.tabela-admin a,
+.conteudo-servicos table.tabela-lojas a{
+  color: inherit;
+  text-decoration: none;
+}
+.conteudo-servicos table.tabela-admin a:hover,
+.conteudo-servicos table.tabela-lojas a:hover{
+  text-decoration: underline;
+}
+
+/* ====== larguras das colunas (ajusta por página) ====== */
+/* Exemplo para LOJAS: ID | Nome | Morada | Gerente | Ações */
+.conteudo-servicos table.tabela-lojas th:nth-child(1),
+.conteudo-servicos table.tabela-lojas td:nth-child(1){ width:80px; }
+
+.conteudo-servicos table.tabela-lojas th:nth-child(2),
+.conteudo-servicos table.tabela-lojas td:nth-child(2){ width:220px; }
+
+.conteudo-servicos table.tabela-lojas th:nth-child(3),
+.conteudo-servicos table.tabela-lojas td:nth-child(3){ width:auto; } /* ocupa o resto */
+
+.conteudo-servicos table.tabela-lojas th:nth-child(4),
+.conteudo-servicos table.tabela-lojas td:nth-child(4){ width:120px; }
+
+.conteudo-servicos table.tabela-lojas th:nth-child(5),
+.conteudo-servicos table.tabela-lojas td:nth-child(5){ width:120px; }
+
+
+/* Responsivo tipo o teu */
+@media (max-width: 900px){
+  .conteudo-servicos table.tabela-admin,
+  .conteudo-servicos table.tabela-lojas{
+    min-width: 900px; /* ativa scroll horizontal */
+  }
+}

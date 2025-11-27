@@ -1,81 +1,76 @@
-const servidor = ""; // igual ao serviço
-
-const ENDPOINTS = {
-  LISTAR: `${servidor}/lojas`,          // GET
-  APAGAR: `${servidor}/apagarLoja`,    // POST {id}
-};
-
-let idParaApagar = null;
+const servidor = "";
 
 async function actualizarLojas() {
-  const URL = ENDPOINTS.LISTAR;
-  const res = await fetch(URL, { cache: "no-store" });
-  const json = await res.json();
+  const URL = servidor + "/lojas";
+  const res = await fetch(URL);
+  console.log("URL:", URL, "status:", res.status);
 
+  if (!res.ok) {
+    const txt = await res.text();
+    console.error("Erro /lojas:", txt);
+    return;
+  }
+
+  const json = await res.json();
   const container = document.getElementById("lista-lojas");
   container.innerHTML = "";
 
   json.forEach(element => {
-    const linha = document.createElement("div");
-    linha.className = "linha-tabela linha-servico";
+    const tr = document.createElement("tr");
 
-    linha.innerHTML = `
-      <div class="coluna-tabela coluna-id">${element.id}</div>
-      <div class="coluna-tabela coluna-nome">${element.nome}</div>
-      <div class="coluna-tabela coluna-descricao">${element.morada ?? ""}</div>
-      <div class="coluna-tabela coluna-descricao">${element.gerente_id ?? "-"}</div>
-      <div class="coluna-tabela coluna-acoes">
-        <a href="/views/admin/abaLoja/detalhesLoja.html?id=${element.id}" class="botao-acao botao-acao-editar">
-          <i class="fa fa-eye"></i>
+    tr.innerHTML = `
+      <td>${element.id}</td>
+
+      <td>
+        <a href="/views/admin/abaLoja/detalhesLoja.html?id=${element.id}" class="link-linha-loja">
+          ${element.nome}
         </a>
-        <a href="/views/admin/abaLoja/updateLoja.html?id=${element.id}" class="botao-acao botao-acao-editar">
-          <i class="fa fa-pencil"></i>
+      </td>
+
+      <td>${element.morada ?? ""}</td>
+      <td>${element.gerente_id ?? "-"}</td>
+
+      <td>
+        <a href="/views/admin/abaLoja/updateLoja.html?id=${element.id}" 
+          class="btn-acao" title="Editar">✏️
         </a>
-        <button class="botao-acao botao-acao-apagar" onclick="abrirModalApagar(${element.id})">
-          <i class="fa fa-trash"></i>
+
+        <button class="btn-acao botao-acao-apagar" title="Apagar">
+          🗑️
         </button>
-      </div>
+      </td>
     `;
 
-    container.appendChild(linha);
+    tr.querySelector(".botao-acao-apagar").addEventListener("click", () => {
+      if (confirm("Quer mesmo apagar a loja?")) {
+        apagarLoja(element.id);
+      }
+    });
+
+    container.appendChild(tr);
   });
 }
 
-function abrirModalApagar(id) {
-  idParaApagar = id;
-  document.getElementById("modal-apagar-loja").style.display = "flex";
-}
+async function apagarLoja(id) {
+  console.log("🗑️ apagarLoja chamado com id:", id);
 
-function fecharModalApagar() {
-  idParaApagar = null;
-  document.getElementById("modal-apagar-loja").style.display = "none";
-}
+  const URL = servidor + "/apagarLoja";
+  console.log("➡️ POST para:", URL);
 
-async function apagarLojaConfirmado() {
-  if (!idParaApagar) return;
-
-  const res = await fetch(ENDPOINTS.APAGAR, {
+  const res = await fetch(URL, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ id: idParaApagar })
+    body: JSON.stringify({ id })
   });
 
-  if (!res.ok) {
-    const txt = await res.text();
-    console.error("Erro apagarLoja:", res.status, txt);
-    return;
-  }
+  console.log("⬅️ status apagarLoja:", res.status);
 
-  fecharModalApagar();
+  const txt = await res.text();
+  console.log("body apagarLoja:", txt);
+
+  if (!res.ok) return;
+
   actualizarLojas();
 }
 
-window.onload = () => {
-  document.getElementById("cancelar-apagar").onclick = (e) => {
-    e.preventDefault();
-    fecharModalApagar();
-  };
-  document.getElementById("confirmar-apagar").onclick = apagarLojaConfirmado;
-
-  actualizarLojas();
-};
+actualizarLojas();

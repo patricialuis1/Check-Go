@@ -108,147 +108,58 @@ APP.post("/apagarServico", async (req, res) => {
 
 
 //LOJAS
-// LISTAR
+
+// criar loja
+APP.post("/novaLoja", async (req, res) => {
+  const { nome, morada, gerente_id } = req.body;
+
+  if (!nome || nome.trim() === "" || !morada || morada.trim() === "") {
+    res.send({ response: "Campos vazios." });
+    return;
+  }
+
+  const loja = new Loja(nome, morada, gerente_id ?? null);
+  const bdo = new OperadorLojas();
+  await bdo.inserirLoja(loja);
+
+  res.send({ response: "ok" });
+});
+
+// listar lojas
 APP.get("/lojas", async (req, res) => {
-  try {
-    const bdo = new OperadorLojas();
-    const lojas = await bdo.obterLojas();
-    res.json(lojas);
-  } catch (err) {
-    console.error("ERRO GET /lojas:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
+  const bdo = new OperadorLojas();
+  const coleccao = await bdo.obterLojas();
+  res.send(coleccao);
 });
 
-// OBTER 1
+// obter 1 loja (detalhes/update)
 APP.get("/lojas/:id", async (req, res) => {
-  try {
-    const bdo = new OperadorLojas();
-    const loja = await bdo.obterLoja(req.params.id);
-    res.json(loja);
-  } catch (err) {
-    console.error("ERRO GET /lojas/:id:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
+  const bdo = new OperadorLojas();
+  const loja = await bdo.obterLojaPorId(req.params.id);
+  res.send(loja);
 });
 
-// INSERIR
-APP.post("/lojas", async (req, res) => {
-  try {
-    const { nome, morada, gerente_id } = req.body;
-    const nova = new Loja(null, nome, morada, gerente_id ?? null);
-    const bdo = new OperadorLojas();
-    const criada = await bdo.inserirLoja(nova);
-    res.status(201).json(criada);
-  } catch (err) {
-    console.error("ERRO POST /lojas:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
+// atualizar loja
+APP.post("/actualizarLoja", async (req, res) => {
+  const { id, nome, morada, gerente_id } = req.body;
+
+  const loja = new Loja(nome, morada, gerente_id ?? null, id);
+  const bdo = new OperadorLojas();
+  await bdo.updateLoja(loja);
+
+  res.send({ resultado: "Loja actualizada" });
 });
 
-// ATUALIZAR
-APP.put("/lojas/:id", async (req, res) => {
-  try {
-    const { nome, morada, gerente_id } = req.body;
-    const loja = new Loja(req.params.id, nome, morada, gerente_id ?? null);
-    const bdo = new OperadorLojas();
-    const atualizada = await bdo.atualizarLoja(req.params.id, loja);
-    res.json(atualizada);
-  } catch (err) {
-    console.error("ERRO PUT /lojas/:id:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
+// apagar loja
+APP.post("/apagarLoja", async (req, res) => {
+  const { id } = req.body;
+
+  const bdo = new OperadorLojas();
+  await bdo.apagarLoja(id);
+
+  res.send({ resultado: "ok" });
 });
 
-// APAGAR
-APP.post("/apagarServico", async (req, res) => {
-  try {
-    const { id } = req.body;
-
-    const bdo = new OperadorServicos();
-    await bdo.apagarServico(Number(id));
-
-    return res.json({ ok: true });
-  } catch (err) {
-    console.error("ERRO /apagarServico:", err?.stack || err);
-    return res.status(500).json({ message: err.message });
-  }
-});
-
-
-
-//COLABORADORES
-
-// LISTAR colaboradores
-APP.get("/colaboradores", async (req, res) => {
-  try {
-    const bdo = new OperadorColaboradores();
-    const lista = await bdo.obterColaboradores();
-    res.json(lista);
-  } catch (err) {
-    console.error("ERRO GET /colaboradores:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// OBTER 1
-APP.get("/colaboradores/:id", async (req, res) => {
-  try {
-    const bdo = new OperadorColaboradores();
-    const colab = await bdo.obterColaborador(req.params.id);
-    res.json(colab);
-  } catch (err) {
-    console.error("ERRO GET /colaboradores/:id:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// INSERIR
-APP.post("/colaboradores", async (req, res) => {
-  try {
-    const { nome, email, password, loja_id } = req.body;
-    const novo = new Colaborador(null, nome, email, password, "Colaborador", loja_id, true);
-    const bdo = new OperadorColaboradores();
-    const criado = await bdo.inserirColaborador(novo);
-    res.status(201).json(criado);
-  } catch (err) {
-    console.error("ERRO POST /colaboradores:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// ATUALIZAR
-APP.put("/colaboradores/:id", async (req, res) => {
-  try {
-    const { nome, email, password, loja_id, ativo } = req.body;
-    const colab = new Colaborador(req.params.id, nome, email, password ?? null, "Colaborador", loja_id, ativo);
-    const bdo = new OperadorColaboradores();
-    const atualizado = await bdo.atualizarColaborador(req.params.id, colab);
-    res.json(atualizado);
-  } catch (err) {
-    console.error("ERRO PUT /colaboradores/:id:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// APAGAR
-APP.delete("/colaboradores/:id", async (req, res) => {
-  try {
-    const bdo = new OperadorColaboradores();
-    await bdo.apagarColaborador(req.params.id);
-    res.json({ ok: true });
-  } catch (err) {
-    console.error("ERRO DELETE /colaboradores/:id:", err?.stack || err);
-    res.status(500).json({ message: err.message });
-  }
-});
-
-
-
-// 404 
-APP.use((req, res) => {
-  res.sendFile(path.join(__dirname, "public", "404.html"));
-});
 
 export default APP;
 

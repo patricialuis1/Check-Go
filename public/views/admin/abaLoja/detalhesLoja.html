@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin- Detalhes Serviço</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/CRUD/detalhesServico.css" />
+    <link rel="stylesheet" href="/css/layoutAdmin.css" />
+</head>
+<body>
+    <div class="layout-principal">
+        <!-- BARRA LATERAL -->
+        <aside class="barra-lateral">
+          <div class="cabecalho-lateral">
+            <span class="linha-titulo"></span>
+            <span class="titulo-lateral">Administração</span>
+          </div>
+    
+          <div class="cartao-logo">
+            <img src="/imagens/Check_Go__3_-removebg-preview.png"
+                 alt="Logo Check&Go"
+                 class="imagem-logo" />
+          </div>
+    
+          <div class="secao-utilizador">
+            <div class="nome-utilizador">Tomás Ribeiro</div>
+            <div class="cargo-utilizador">Admin</div>
+          </div>
+    
+          <nav class="menu-lateral">
+            <a href="/views/admin/dashboard.html" class="item-menu item-menu-ativo">
+              <span class="icone-menu">
+                <img src="/imagens/icons/home.png" alt="Home">
+              </span>
+              <span class="texto-menu">Home</span>
+            </a>
+    
+            <a href="/views/admin/abaServico/listaLoja.html" class="item-menu">
+              <span class="icone-menu">
+                <img src="/imagens/icons/lojas.png" alt="Lojas">
+              </span>
+              <span class="texto-menu">Lojas</span>
+            </a>
+    
+            <a href="/views/admin/abaServico/listaColaborador.html" class="item-menu">
+              <span class="icone-menu">
+                <img src="/imagens/icons/colaborador.png" alt="Colaboradores">
+              </span>
+              <span class="texto-menu">Colaboradores</span>
+            </a>
+    
+            <a href="/views/admin/abaServico/listaServico.html" class="item-menu">
+              <span class="icone-menu">
+                <img src="/imagens/icons/servicos.png" alt="Serviços">
+              </span>
+              <span class="texto-menu">Serviços</span>
+            </a>
+    
+            <a href="/views/colaborador/escolherservico.html" class="item-menu">
+              <span class="icone-menu">
+                <img src="/imagens/icons/voltarColab.png" alt="Voltar como Colab">
+              </span>
+              <span class="texto-menu">Voltar como Colab</span>
+            </a>
+          </nav>
+    
+          <div class="rodape-lateral">
+            <a href="/logout" class="link-logout">
+              <span class="texto-logout">Logout</span>
+              <span class="icone-logout">
+                <img src="/imagens/icons/logout.png" alt="Logout">
+              </span>
+            </a>
+          </div>
+        </aside>
+<!--DETALHE SERVIÇO -->
+ <main class="container">
+      <h1 class="titulo">Ver Loja</h1>
+
+      <div class="detalhes">
+        <div class="linha">
+          <span class="label">Nome</span>
+          <span class="valor" id="det-nome"></span>
+        </div>
+
+        <div class="linha">
+          <span class="label">Morada</span>
+          <span class="valor" id="det-morada"></span>
+        </div>
+
+        <div class="linha">
+          <span class="label">Gerente</span>
+          <span class="valor" id="det-gerente"></span>
+        </div>
+      </div>
+    </main>
+  <script src="/js/loja/detalhesLoja.js"></script>
+</body>
+</html>
