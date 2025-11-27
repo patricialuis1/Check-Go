@@ -31,8 +31,7 @@ async function actualizarServicos() {
       <div class="coluna-tabela coluna-acoes">
         <a href="/views/admin/abaServico/updateServico.html?id=${element.id}"
           class="botao-acao-servico botao-acao-editar">✏️</a>
-
-        <button class="botao-acao-servico botao-acao-apagar">🗑️</button>
+        <button class="botao-acao-servico botao-acao-apagar" onclick="apagarServico(${element.id})">🗑️</button>
       </div>
     `;
 
@@ -48,14 +47,27 @@ async function actualizarServicos() {
 }
 
 async function apagarServico(id) {
-  const URL = servidor + "apagarServico";
-  await fetch(URL, {
+  console.log("🗑️ apagarServico chamado com id:", id);
+
+  const URL = servidor + "/apagarServico";
+  console.log("➡️ POST para:", URL);
+
+  const res = await fetch(URL, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ id })
   });
 
+  console.log("⬅️ status apagarServico:", res.status);
+
+  const txt = await res.text();
+  console.log("body apagarServico:", txt);
+
+  if (!res.ok) return;
+
   actualizarServicos();
 }
+
+
 
 actualizarServicos();

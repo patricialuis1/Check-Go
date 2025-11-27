@@ -25,15 +25,16 @@ class OperadorServicos {
     return data.map(s => new Servico(s.nome, s.descricao, s.id));
   }
 
-  async apagarServico(id) {
-    const { error } = await supabase
-      .from("servicos")
-      .delete()
-      .eq("id", id);
+async apagarServico(id) {
+  const { error } = await supabase
+    .from("servicos")
+    .delete()
+    .eq("id", id);
 
-    if (error) throw error;
-    return true;
-  }
+  if (error) throw error;
+  return true;
+}
+
 
   async updateServico(servico) {
     const { error } = await supabase
