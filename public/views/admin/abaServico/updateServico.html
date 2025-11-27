@@ -78,16 +78,14 @@
     <main class="container">
         <h1 class="titulo">Atualizar Serviço</h1>
 
-        <form class="formulario">
+        <form class="formulario" id="form-update-servico">
             <div class="campo">
                 <label for="nome">Nome</label>
-                <!-- mudar placeholder para dinamico com o nome que e o servico-->
                 <input type="text" id="nome" name="nome" placeholder="Nome serviço" required>
             </div>
 
             <div class="campo">
                 <label for="descricao">Descrição</label>
-                <!-- mudar placeholder para dinamico com o nome que e o servico-->
                 <textarea id="descricao" name="descricao" rows="5" placeholder="Descrição serviço"></textarea>
             </div>
 
@@ -98,5 +96,6 @@
             </div>
         </form>
     </main>
+  <script src="/js/servico/updateServico.js"></script>
 </body>
 </html>

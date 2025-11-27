@@ -261,6 +261,14 @@
   color: #ffffff;
 }
 
+.link-linha-servico{
+  display: contents;   /* deixa a grid igual mas clicável */
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
 /* ========= RESPONSIVO ========= */
 
 @media (max-width: 900px) {
