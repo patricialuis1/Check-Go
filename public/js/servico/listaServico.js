@@ -3,6 +3,14 @@ const servidor = "";
 async function actualizarServicos() {
   const URL = servidor + "/servicos";
   const res = await fetch(URL);
+  console.log("URL:", URL, "status:", res.status);
+
+  if (!res.ok) {
+  const txt = await res.text();
+  console.error("Erro /servicos:", txt);
+  return;
+  }
+
   const json = await res.json();
 
   const container = document.getElementById("lista-servicos");
