@@ -1,4 +1,4 @@
-const servidor = "http://localhost:3000/";
+const servidor = "";
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
@@ -12,7 +12,7 @@ async function carregarDetalhes() {
     return;
   }
 
-  const res = await fetch(servidor + "servicos/" + id);
+  const res = await fetch(servidor + "/servicos/" + id);
   const s = await res.json();
 
   if (!s || s.error) {

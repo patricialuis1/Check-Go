@@ -1,7 +1,7 @@
-const servidor = "http://localhost:3000/";
+const servidor = "";
 
 async function actualizarServicos() {
-  const URL = servidor + "servicos";
+  const URL = servidor + "/servicos";
   const res = await fetch(URL);
   const json = await res.json();
 

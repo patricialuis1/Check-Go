@@ -1,5 +1,5 @@
 // public/js/servico/criarServico.js
-const servidor = "http://localhost:3000/";
+const servidor = "";
 
 const form = document.getElementById("form-criar-servico");
 const btnCancelar = document.querySelector(".btn-cancelar");
@@ -19,7 +19,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const URL = servidor + "novoServico";
+  const URL = servidor + "/novoServico";
   const res = await fetch(URL, {
     method: "POST",
     headers: { "content-type": "application/json" },

@@ -1,4 +1,4 @@
-const servidor = "http://localhost:3000/";
+const servidor = "";
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
@@ -14,7 +14,7 @@ async function carregarServico() {
     return;
   }
 
-  const res = await fetch(servidor + "servicos/" + id);
+  const res = await fetch(servidor + "/servicos/" + id);
   const s = await res.json();
 
   if (!s || s.error) {
@@ -38,7 +38,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const res = await fetch(servidor + "actualizarServico", {
+  const res = await fetch(servidor + "/actualizarServico", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ id, nome, descricao })

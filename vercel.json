@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/servicos", "destination": "/api/index.js" },
+    { "source": "/servicos/:id", "destination": "/api/index.js" },
+    { "source": "/novoServico", "destination": "/api/index.js" },
+    { "source": "/actualizarServico", "destination": "/api/index.js" },
+    { "source": "/apagarServico", "destination": "/api/index.js" },
+
+    { "source": "/(.*)", "destination": "/public/$1" }
+  ]
+}

@@ -73,6 +73,5 @@ APP.use((req, res) => {
   res.sendFile(path.join(__dirname, "public", "404.html"));
 });
 
-APP.listen(PORT, () => {
-  console.log("A correr na porta: " + PORT);
-});
+export default APP;
+
