@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import APP from "./app.js";
 
 const PORT = 3000;

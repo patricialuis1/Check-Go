@@ -16,6 +16,19 @@ APP.use(express.json());
 
 APP.use("/", express.static("public"));
 
+//debug supabase
+APP.get("/debug-servicos", async (req, res) => {
+  const { data, error } = await supabase
+    .from("servicos")
+    .select("*");
+
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+
+  res.json({ data, error });
+});
+
+
 
 // criar
 APP.post("/novoServico", async (req, res) => {
