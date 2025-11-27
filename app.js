@@ -109,55 +109,114 @@ APP.post("/apagarServico", async (req, res) => {
 
 //LOJAS
 
-// criar loja
+//LOJAS
+
+// criar loja (agora com serviços)
 APP.post("/novaLoja", async (req, res) => {
-  const { nome, morada, gerente_id } = req.body;
+  try {
+    const { nome, morada, gerente_id, servicoIds } = req.body;
 
-  if (!nome || nome.trim() === "" || !morada || morada.trim() === "") {
-    res.send({ response: "Campos vazios." });
-    return;
+    if (!nome || nome.trim() === "" || !morada || morada.trim() === "") {
+      return res.status(400).send({ response: "Campos vazios." });
+    }
+
+    if (!Array.isArray(servicoIds) || servicoIds.length === 0) {
+      return res.status(400).send({ response: "A loja tem de ter pelo menos 1 serviço." });
+    }
+
+    // se estás a usar o novo modelo Loja (com object)
+    const loja = new Loja({
+      nome,
+      morada,
+      gerente_id: gerente_id ?? null
+    });
+
+    const bdo = new OperadorLojas();
+    await bdo.inserirLoja(loja, servicoIds.map(Number));
+
+    return res.send({ response: "ok" });
+  } catch (err) {
+    console.error("🔥 ERRO /novaLoja:", err?.stack || err);
+    return res.status(500).send({ response: err.message || "Erro interno" });
   }
-
-  const loja = new Loja(nome, morada, gerente_id ?? null);
-  const bdo = new OperadorLojas();
-  await bdo.inserirLoja(loja);
-
-  res.send({ response: "ok" });
 });
 
-// listar lojas
+
+// listar lojas (já vem com serviços ativos + gerente nome/id)
 APP.get("/lojas", async (req, res) => {
-  const bdo = new OperadorLojas();
-  const coleccao = await bdo.obterLojas();
-  res.send(coleccao);
+  try {
+    const bdo = new OperadorLojas();
+    const coleccao = await bdo.obterLojas(); 
+    return res.status(200).json(coleccao);
+  } catch (err) {
+    console.error("🔥 ERRO /lojas:", err?.stack || err);
+    return res.status(500).json({ message: err.message });
+  }
 });
 
-// obter 1 loja (detalhes/update)
+
+// obter 1 loja (detalhes/update) — com serviços ativos + gerente nome/id
 APP.get("/lojas/:id", async (req, res) => {
-  const bdo = new OperadorLojas();
-  const loja = await bdo.obterLojaPorId(req.params.id);
-  res.send(loja);
+  try {
+    const bdo = new OperadorLojas();
+    const loja = await bdo.obterLojaPorId(Number(req.params.id));
+    return res.status(200).json(loja);
+  } catch (err) {
+    console.error("🔥 ERRO /lojas/:id:", err?.stack || err);
+    return res.status(500).json({ message: err.message });
+  }
 });
 
-// atualizar loja
+
+// atualizar loja (agora com serviços)
 APP.post("/actualizarLoja", async (req, res) => {
-  const { id, nome, morada, gerente_id } = req.body;
+  try {
+    const { id, nome, morada, gerente_id, servicoIds } = req.body;
 
-  const loja = new Loja(nome, morada, gerente_id ?? null, id);
-  const bdo = new OperadorLojas();
-  await bdo.updateLoja(loja);
+    if (!id) return res.status(400).json({ resultado: false, message: "id em falta" });
+    if (!nome || nome.trim() === "" || !morada || morada.trim() === "") {
+      return res.status(400).json({ resultado: false, message: "Campos vazios" });
+    }
 
-  res.send({ resultado: "Loja actualizada" });
+    if (!Array.isArray(servicoIds) || servicoIds.length === 0) {
+      return res.status(400).json({
+        resultado: false,
+        message: "A loja tem de ter pelo menos 1 serviço."
+      });
+    }
+
+    const loja = new Loja({
+      id: Number(id),
+      nome,
+      morada,
+      gerente_id: gerente_id ?? null
+    });
+
+    const bdo = new OperadorLojas();
+    await bdo.updateLoja(loja, servicoIds.map(Number));
+
+    return res.send({ resultado: true });
+  } catch (err) {
+    console.error("🔥 ERRO /actualizarLoja:", err?.stack || err);
+    return res.status(500).json({ resultado: false, message: err.message });
+  }
 });
+
 
 // apagar loja
 APP.post("/apagarLoja", async (req, res) => {
-  const { id } = req.body;
+  try {
+    const { id } = req.body;
+    if (!id) return res.status(400).json({ resultado: false, message: "id em falta" });
 
-  const bdo = new OperadorLojas();
-  await bdo.apagarLoja(id);
+    const bdo = new OperadorLojas();
+    await bdo.apagarLoja(Number(id));
 
-  res.send({ resultado: "ok" });
+    return res.send({ resultado: "ok" });
+  } catch (err) {
+    console.error("🔥 ERRO /apagarLoja:", err?.stack || err);
+    return res.status(500).json({ resultado: false, message: err.message });
+  }
 });
 
 
