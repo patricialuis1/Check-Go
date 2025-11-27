@@ -35,10 +35,20 @@ APP.post("/novoServico", async (req, res) => {
 
 // listar
 APP.get("/servicos", async (req, res) => {
-  const bdo = new OperadorServicos();
-  const coleccao = await bdo.obterServicos();
-  res.send(coleccao);
+  try {
+    console.log("➡️ GET /servicos");
+    const bdo = new OperadorServicos();
+    const coleccao = await bdo.obterServicos();
+    return res.status(200).json(coleccao);
+  } catch (err) {
+    console.error("🔥 ERRO em GET /servicos");
+    console.error(err?.stack || err);
+    return res.status(500).json({
+      message: err?.message || "Erro interno ao listar serviços",
+    });
+  }
 });
+
 
 // obter 1 (para detalhes/update)
 APP.get("/servicos/:id", async (req, res) => {
