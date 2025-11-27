@@ -6,6 +6,13 @@
     { "source": "/actualizarServico", "destination": "/api/index.js" },
     { "source": "/apagarServico", "destination": "/api/index.js" },
 
+    { "source": "/lojas", "destination": "/api/index.js" },
+    { "source": "/lojas/:id", "destination": "/api/index.js" },
+    { "source": "/novaLoja", "destination": "/api/index.js" },
+    { "source": "/actualizarLoja", "destination": "/api/index.js" },
+    { "source": "/apagarLoja", "destination": "/api/index.js" },
+
+    
     { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
