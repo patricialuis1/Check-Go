@@ -11,19 +11,25 @@
   max-width: none;            /* remove limites vindos do layout */
   margin: 0;                  /* remove centragem/margens */
   box-sizing: border-box;
+  overflow: hidden;
+  padding-bottom: 0;
+  height: 100dvh;
 }
+
 
 /* Caixa branca principal */
 
 .conteudo-servicos .secao-servicos {
   background-color: #ffffff;
   border-radius: 12px;
-  padding: 20px 24px 24px;
+  padding: 20px 24px 24px 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   width: 100%;
   max-width: none;
   box-sizing: border-box;
+  margin-bottom: 0;
 }
+
 
 /* Topo */
 
@@ -200,7 +206,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   opacity: 0;
@@ -209,10 +215,20 @@
   z-index: 50;
 }
 
+
+/* quando ativo */
+.conteudo-servicos .modal-apagar.ativo {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+/*
 .conteudo-servicos .modal-apagar:target {
   opacity: 1;
   pointer-events: auto;
 }
+*/
+
 
 .conteudo-servicos .modal-caixa {
   width: 100%;

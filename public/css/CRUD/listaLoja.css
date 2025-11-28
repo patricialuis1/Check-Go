@@ -126,6 +126,62 @@
 .conteudo-servicos table.tabela-lojas td:nth-child(5){ width:120px; }
 
 
+.area-conteudo.conteudo-servicos{
+  height: 100dvh;       
+  overflow: hidden;    
+  padding-bottom: 0;
+  box-sizing: border-box;    
+}
+
+
+.conteudo-servicos .secao-servicos{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;        
+  margin-bottom: 0;
+}
+
+.conteudo-servicos .cabecalho-servicos{
+  flex: 0 0 auto;
+}
+
+
+.conteudo-servicos .table-wrapper{
+  flex: 1 1 auto;
+  min-height: 0;        
+  overflow-y: auto;     
+  overflow-x: hidden;
+  margin-bottom: 0;
+  padding-bottom: 0; 
+}
+
+.conteudo-servicos .tabela-lojas thead th{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #f6f6f6;
+}
+
+.tabela-lojas {
+  width: 100%;
+  border-collapse: separate; 
+  border-spacing: 0;
+}
+
+
+.tabela-lojas thead th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #f6f6f6;   
+  box-shadow: 0 2px 0 rgba(0,0,0,0.05);
+}
+
+
+
+
+
 /* Responsivo tipo o teu */
 @media (max-width: 900px){
   .conteudo-servicos table.tabela-admin,
