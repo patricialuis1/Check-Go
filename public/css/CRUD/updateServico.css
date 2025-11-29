@@ -71,6 +71,21 @@
     justify-content: left;
 }
 
+.btn-cancelar {
+    padding: 12px 32px;
+    background-color: #e6796a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
 .btn-save {
     padding: 12px 32px;
     background-color: #48bb78;
@@ -88,6 +103,11 @@
 
 .btn-save:hover {
     background-color: #38a169;
+}
+
+
+.btn-cancelar:hover {
+    background-color: #d65c4a;
 }
 
 .icone-check {

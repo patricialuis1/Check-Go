@@ -1,73 +1,108 @@
+// OperadorBD/operadorColaboradores.js
 import supabase from "../config/supabaseClient.js";
 import Colaborador from "../modelos/colaborador.js";
 
-export default class OperadorColaboradores {
+class OperadorColaboradores {
 
+  // criar colaborador
+async inserirColaborador(colab, password) {
+  const { error } = await supabase
+    .from("users")
+    .insert([{
+      nome: colab.nome,
+      email: colab.email,
+      password,              // 👈 agora vem daqui
+      role: colab.role,
+      loja_id: colab.loja_id,
+      ativo: colab.ativo
+    }]);
+
+  if (error) throw error;
+  return true;
+}
+
+
+  // listar colaboradores (com nome da loja)
   async obterColaboradores() {
     const { data, error } = await supabase
       .from("users")
-      .select("id, nome, email, role, loja_id, ativo")
-      .eq("role", "Colaborador")
+      .select(`
+        id,
+        nome,
+        email,
+        role,
+        loja_id,
+        ativo,
+        loja:lojas!users_loja_id_fkey (
+          id,
+          nome
+        )
+      `)
       .order("id", { ascending: true });
 
     if (error) throw error;
-    return data.map(u =>
-      new Colaborador(u.id, u.nome, u.email, null, u.role, u.loja_id, u.ativo)
-    );
+
+    return data.map(u => new Colaborador({
+      id: u.id,
+      nome: u.nome,
+      email: u.email,
+      role: u.role,
+      loja_id: u.loja_id,
+      loja_nome: u.loja?.nome ?? null,
+      ativo: u.ativo
+    }));
   }
 
-  async obterColaborador(id) {
+  // obter 1 colaborador
+  async obterColaboradorPorId(id) {
     const { data, error } = await supabase
       .from("users")
-      .select("id, nome, email, role, loja_id, ativo")
+      .select(`
+        id,
+        nome,
+        email,
+        role,
+        loja_id,
+        ativo,
+        loja:lojas!users_loja_id_fkey (
+          id,
+          nome
+        )
+      `)
       .eq("id", id)
       .single();
 
     if (error) throw error;
-    return new Colaborador(data.id, data.nome, data.email, null, data.role, data.loja_id, data.ativo);
+
+    return new Colaborador({
+      id: data.id,
+      nome: data.nome,
+      email: data.email,
+      role: data.role,
+      loja_id: data.loja_id,
+      loja_nome: data.loja?.nome ?? null,
+      ativo: data.ativo
+    });
   }
 
-  async inserirColaborador(colab) {
-    const { data, error } = await supabase
+  // atualizar colaborador
+  async updateColaborador(colab) {
+    const { error } = await supabase
       .from("users")
-      .insert([{
-        nome: colab.getNome(),
-        email: colab.getEmail(),
-        password: colab.getPassword(), // ideal: já vir hashado
-        role: "Colaborador",
-        loja_id: colab.getLojaId(),
-        ativo: colab.getAtivo()
-      }])
-      .select("id, nome, email, role, loja_id, ativo")
-      .single();
+      .update({
+        nome: colab.nome,
+        email: colab.email,
+        role: colab.role,
+        loja_id: colab.loja_id,
+        ativo: colab.ativo
+      })
+      .eq("id", colab.id);
 
     if (error) throw error;
-    return new Colaborador(data.id, data.nome, data.email, null, data.role, data.loja_id, data.ativo);
+    return true;
   }
 
-  async atualizarColaborador(id, colab) {
-    const payload = {
-      nome: colab.getNome(),
-      email: colab.getEmail(),
-      loja_id: colab.getLojaId(),
-      ativo: colab.getAtivo(),
-      role: "Colaborador"
-    };
-
-    // só atualiza password se vier no body
-    if (colab.getPassword()) payload.password = colab.getPassword();
-
-    const { data, error } = await supabase
-      .from("users")
-      .update(payload)
-      .eq("id", id)
-      .select("id, nome, email, role, loja_id, ativo")
-      .single();
-
-    if (error) throw error;
-    return new Colaborador(data.id, data.nome, data.email, null, data.role, data.loja_id, data.ativo);
-  }
-
+  // apagar colaborador
   async apagarColaborador(id) {
     const { error } = await supabase
       .from("users")
@@ -78,3 +113,5 @@ export default class OperadorColaboradores {
     return true;
   }
 }
+
+export default OperadorColaboradores;

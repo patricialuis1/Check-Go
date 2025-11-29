@@ -220,5 +220,96 @@ APP.post("/apagarLoja", async (req, res) => {
 });
 
 
+// COLABORADORES
+
+APP.post("/novoColaborador", async (req, res) => {
+  try {
+    const { nome, email, password, role, loja_id, ativo } = req.body;
+
+    if (!nome || !email || !password) {
+      return res.status(400).send({ response: "Nome, email e password são obrigatórios." });
+    }
+
+    const colab = new Colaborador({
+      nome,
+      email,
+      role: role || "Colaborador",
+      loja_id: loja_id || null,
+      ativo: ativo !== undefined ? ativo : true
+    });
+
+    const bdo = new OperadorColaboradores();
+    await bdo.inserirColaborador(colab, password);   // 👈 manda password separado
+
+    res.send({ response: "ok" });
+  } catch (err) {
+    console.error("🔥 ERRO /novoColaborador:", err);
+    res.status(500).send({ response: err.message || "Erro interno" });
+  }
+});
+
+APP.get("/colaboradores", async (req, res) => {
+  try {
+    const bdo = new OperadorColaboradores();
+    const lista = await bdo.obterColaboradores();
+    res.status(200).json(lista);
+  } catch (err) {
+    console.error("🔥 ERRO /colaboradores:", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+APP.get("/colaboradores/:id", async (req, res) => {
+  try {
+    const bdo = new OperadorColaboradores();
+    const colab = await bdo.obterColaboradorPorId(Number(req.params.id));
+    res.status(200).json(colab);
+  } catch (err) {
+    console.error("🔥 ERRO /colaboradores/:id:", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+APP.post("/actualizarColaborador", async (req, res) => {
+  try {
+    const { id, nome, email, role, loja_id, ativo } = req.body;
+
+    if (!id || !nome || !email) {
+      return res.status(400).json({ resultado: false, message: "Campos obrigatórios em falta." });
+    }
+
+    const colab = new Colaborador({
+      id: Number(id),
+      nome,
+      email,
+      role: role || "Colaborador",
+      loja_id: loja_id || null,
+      ativo: ativo !== undefined ? ativo : true
+    });
+
+    const bdo = new OperadorColaboradores();
+    await bdo.updateColaborador(colab);
+
+    res.send({ resultado: true });
+  } catch (err) {
+    console.error("🔥 ERRO /actualizarColaborador:", err);
+    res.status(500).json({ resultado: false, message: err.message });
+  }
+});
+
+APP.post("/apagarColaborador", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const bdo = new OperadorColaboradores();
+    await bdo.apagarColaborador(Number(id));
+    res.send({ resultado: "ok" });
+  } catch (err) {
+    console.error("🔥 ERRO /apagarColaborador:", err);
+    res.status(500).json({ resultado: false, message: err.message });
+  }
+});
+
+
+
 export default APP;
 
