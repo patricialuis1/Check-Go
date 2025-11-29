@@ -12,6 +12,12 @@
     { "source": "/actualizarLoja", "destination": "/api/index.js" },
     { "source": "/apagarLoja", "destination": "/api/index.js" },
 
+    { "source": "/colaboradores", "destination": "/api/index.js" },
+    { "source": "/colaboradores/:id", "destination": "/api/index.js" },
+    { "source": "/novoColaborador", "destination": "/api/index.js" },
+    { "source": "/actualizarColaborador", "destination": "/api/index.js" },
+    { "source": "/apagarColaborador", "destination": "/api/index.js" },
+
     
     { "source": "/(.*)", "destination": "/public/$1" }
   ]

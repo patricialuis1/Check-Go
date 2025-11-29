@@ -11,7 +11,7 @@ async inserirColaborador(colab, password) {
     .insert([{
       nome: colab.nome,
       email: colab.email,
-      password,              // 👈 agora vem daqui
+      password,              
       role: colab.role,
       loja_id: colab.loja_id,
       ativo: colab.ativo
