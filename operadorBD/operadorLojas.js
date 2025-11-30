@@ -177,6 +177,33 @@ class OperadorLojas {
     if (error) throw error;
     return true;
   }
+
+
+   async obterServicosDaLoja(lojaId) {
+    const { data, error } = await supabase
+      .from("lojas_servicos")
+      .select(`
+        id,
+        ativo,
+        servicos (
+          id,
+          nome
+        )
+      `)
+      .eq("loja_id", lojaId)
+      .eq("ativo", true);
+
+    if (error) throw error;
+
+    return (data || []).map(ls => ({
+      loja_servico_id: ls.id,
+      servico_id: ls.servicos?.id,
+      nome: ls.servicos?.nome
+    }));
+  }
+
 }
+
+
 
 export default OperadorLojas;

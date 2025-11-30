@@ -16,96 +16,57 @@
         <img src="/imagens/Check_Go__4_-removebg-preview.png" alt="Logo Check&Go" />
       </div>
       <div class="nav-links">
-        <a href="/views/home.html">Home</a> |
-        <a href="/views/autenticacao/login.html">Colaboradores</a>
+        <a href="/home.html">Home</a>
+        <a href="/colaboradores.html">Colaboradores</a>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <div id="estado-inicial" class="estado ativo">
-    <h3 class="section-title">Senha Atual:</h3>
-      <div class="senha" id="senha-atual">
-        <!-- Dinamicamente preenchido depois -->
-        <div class="digit">A</div>
-        <div class="digit">0</div>
-        <div class="digit">7</div>
-        <div class="digit">8</div>
-      </div>
-      <h3 class="section-title">Fila De Espera</h3>
-      <button class="senha-btn" onclick="mostrarEstadoRetirado()">Retirar Senha</button>
-    </div>
+    <div class="card-senha">
 
-    <div id="estado-retirado" class="estado">
-      <h3 class="section-title">Senha Atual:</h3>
-      <div class="senha">
-        <div class="digit">A</div>
-        <div class="digit">0</div>
-        <div class="digit">7</div>  
-        <div class="digit">8</div>
+      <!-- ESTADO INICIAL (VISÍVEL) -->
+      <div id="estado-inicial" class="estado ativo">
+        <h3 class="section-title">Senha Atual:</h3>
+        <div class="senha" id="senha-atual">
+          <!-- Dinamicamente preenchido depois -->
+          <div class="digit">A</div>
+          <div class="digit">0</div>
+          <div class="digit">7</div>
+          <div class="digit">8</div>
+        </div>
+
+        <h3 class="section-title">Fila De Espera</h3>
+        <button class="senha-btn" onclick="mostrarEstadoRetirado()">Retirar Senha</button>
       </div>
-      <h3 class="section-title">Minha Senha:</h3>
-      <div class="senha" id="senha-user">
-        <div class="digit">A</div>
-        <div class="digit">0</div>
-        <div class="digit">9</div>
-        <div class="digit">2</div>
+
+      <!-- ESTADO RETIRADO (ESCONDIDO À PARTIDA) -->
+      <div id="estado-retirado" class="estado" style="display: none;">
+        <h3 class="section-title">Senha Atual:</h3>
+        <div class="senha">
+          <div class="digit">A</div>
+          <div class="digit">0</div>
+          <div class="digit">7</div>
+          <div class="digit">8</div>
+        </div>
+
+        <h3 class="section-title">Minha Senha:</h3>
+        <div class="senha" id="senha-user">
+          <div class="digit">A</div>
+          <div class="digit">0</div>
+          <div class="digit">9</div>
+          <div class="digit">2</div>
+        </div>
+
+        <h3 class="section-title">Tempo estimado:</h3>
+        <button class="tempo-btn">3min</button>
+
+        <button class="cancel-btn" onclick="voltarParaEstadoInicial()">Cancelar Senha</button>
       </div>
-      <h3 class="section-title">Tempo estimado:</h3>
-      <button class="tempo-btn">3min</button>
-      <button class="cancel-btn" onclick="voltarParaEstadoInicial()">Cancelar Senha</button>
+
     </div>
   </main>
 
-  <script>
-    function mostrarEstadoRetirado() {
-      const inicial = document.getElementById("estado-inicial");
-      const retirado = document.getElementById("estado-retirado");
-
-      inicial.classList.remove("ativo");
-      setTimeout(() => {
-        inicial.style.display = "none";
-        retirado.style.display = "block";
-        setTimeout(() => {
-          retirado.classList.add("ativo");
-        }, 10);
-      }, 300);
-    }
-
-    function voltarParaEstadoInicial() {
-    const inicial = document.getElementById("estado-inicial");
-    const retirado = document.getElementById("estado-retirado");
-
-    retirado.classList.remove("ativo");
-    setTimeout(() => {
-      retirado.style.display = "none";
-      inicial.style.display = "block";
-      setTimeout(() => {
-        inicial.classList.add("ativo");
-      }, 10);
-    }, 300);
-  }
-
-    // ✅ Futuro: Preencher dinamicamente com JS ou backend
-    /*
-    const senhaAtual = "A078";
-    const minhaSenha = "A092";
-
-    function preencherSenha(containerId, senha) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
-      senha.split('').forEach(char => {
-        const div = document.createElement('div');
-        div.className = 'digit';
-        div.textContent = char;
-        container.appendChild(div);
-      });
-    }
-
-    preencherSenha('senha-atual', senhaAtual);
-    preencherSenha('senha-user', minhaSenha);
-    */
-  </script>
-
+  <script src="/js/senhas/retirarSenha.js"></script>
 </body>
 </html>

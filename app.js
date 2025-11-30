@@ -12,6 +12,9 @@ import Loja from "./modelos/loja.js";
 import OperadorColaboradores from "./operadorBD/operadorColaboradores.js";
 import Colaborador from "./modelos/colaborador.js";
 
+import OperadorSenhas from "./operadorBD/operadorSenhas.js";
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -20,6 +23,82 @@ const APP = express();
 
 APP.use(express.json());
 APP.use(express.urlencoded({ extended: true }));
+
+
+// -------- SENHAS --------
+
+// ---------------- SENHAS ----------------
+
+// Cliente tira senha
+APP.post("/tirarSenha", async (req, res) => {
+  try {
+    const { loja_servico_id, tipo } = req.body;
+    const bdo = new OperadorSenhas();
+
+    const senha = await bdo.tirarSenha(loja_servico_id, tipo || "Normal");
+    res.json(senha);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Fila de um serviço (Espera + Atendimento)
+APP.get("/fila/:loja_servico_id", async (req, res) => {
+  try {
+    const loja_servico_id = Number(req.params.loja_servico_id);
+    const bdo = new OperadorSenhas();
+
+    const fila = await bdo.obterFila(loja_servico_id);
+    res.json(fila);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cliente cancela senha (opcional mas o teu JS usa)
+APP.post("/cancelarSenha", async (req, res) => {
+  try {
+    const { senha_id } = req.body;
+    const bdo = new OperadorSenhas();
+
+    const out = await bdo.cancelarSenha(senha_id);
+    res.json(out);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ COLABORADOR: chamar próxima senha (move fila)
+APP.post("/chamarProximo", async (req, res) => {
+  try {
+    const { loja_servico_id, colaborador_id } = req.body;
+    const bdo = new OperadorSenhas();
+
+    const senha = await bdo.chamarProximo(loja_servico_id, colaborador_id || null);
+
+    // se não houver ninguém em espera devolve null
+    res.json(senha);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ COLABORADOR: concluir senha atual
+APP.post("/concluirSenha", async (req, res) => {
+  try {
+    const { senha_id } = req.body;
+    const bdo = new OperadorSenhas();
+
+    const out = await bdo.concluirSenha(senha_id);
+    res.json(out);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+//------------- FIM SENHAS ----------------
+
 APP.use("/", express.static("public"));
 
 //debug supabase
@@ -306,6 +385,21 @@ APP.post("/apagarColaborador", async (req, res) => {
   } catch (err) {
     console.error("🔥 ERRO /apagarColaborador:", err);
     res.status(500).json({ resultado: false, message: err.message });
+  }
+});
+
+//UTILIZADOR - Escolher Servico de uma Loja
+
+// serviços ativos de uma loja
+APP.get("/lojas/:id/servicos", async (req, res) => {
+  try {
+    const lojaId = Number(req.params.id);
+    const bdo = new OperadorLojas();
+    const servicos = await bdo.obterServicosDaLoja(lojaId); 
+    // devolve [{loja_servico_id, nome}]
+    res.json(servicos);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

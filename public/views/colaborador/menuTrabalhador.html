@@ -24,30 +24,29 @@
 
       <!-- Corpo principal -->
   <div class="main-container">
-    <div class="main">
-      <div class="title">Continente</div>
-      <div class="title">Santarem</div>
-      <div class="subtitle">Talho</div>
+  <div class="main">
+    <div class="title" id="loja-nome-1"></div>
+    <div class="title" id="loja-nome-2"></div>
+    <div class="subtitle" id="servico-nome"></div>
 
-      <!-- Ícone de ticket -->
-      <div class="ticket-icon">
-        <img src="/imagens/ticket_black_transparent.png" alt="Ticket" />
-      </div>
 
-      <div class="password-label">Senha Atual:</div>
-      <div class="password" id="senha-container">
-        <div class="digit">A</div>
-        <div class="digit">0</div>
-        <div class="digit">7</div>
-        <div class="digit">8</div>
-
-        <!-- Apagar div class=digit quando implementar JSON para senhas -->
-
-      </div>
-
-      <button class="btn-next">Chamar o próximo</button>
+    <div class="ticket-icon">
+      <img src="/imagens/ticket_black_transparent.png" alt="Ticket" />
     </div>
+
+    <div class="password-label">Senha Atual:</div>
+    <div class="password" id="senha-container">
+      <!-- JS mete os digits -->
+    </div>
+
+    <div class="subtitle" id="contador-espera">Senhas em espera: 0</div>
+
+    <button class="btn-next">Chamar o próximo</button>
   </div>
+</div>
+
+<script src="/js/colaborador/menuTrabalhador.js"></script>
+
 
 </body>
 </html>

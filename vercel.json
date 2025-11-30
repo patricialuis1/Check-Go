@@ -18,6 +18,15 @@
     { "source": "/actualizarColaborador", "destination": "/api/index.js" },
     { "source": "/apagarColaborador", "destination": "/api/index.js" },
 
+
+    { "source": "/tirarSenha", "destination": "/api/index.js" },
+    { "source": "/fila/:loja_servico_id", "destination": "/api/index.js" },
+    { "source": "/cancelarSenha", "destination": "/api/index.js" },
+    { "source": "/chamarProximo", "destination": "/api/index.js" },
+    { "source": "/concluirSenha", "destination": "/api/index.js" },
+
+
+
     
     { "source": "/(.*)", "destination": "/public/$1" }
   ]

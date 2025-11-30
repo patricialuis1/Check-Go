@@ -15,54 +15,104 @@
   text-align: center;
 }
 
+.custom-scope,
+main,
+body {
+  overflow-x: visible;
+}
+
+
 .page-title {
   color: #fff;
   font-size: 1.5rem;
   margin-bottom: 2rem;
 }
 
-/* Botões */
+/* ===== LISTA DINÂMICA E BONITA ===== */
 .servico-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  max-width: 320px;
+  max-width: 380px;
   margin: 0 auto;
+  max-height: 70vh;
+  overflow-y: auto !important;
+  overflow-x: visible !important;
+  padding: 8px 20px 12px 8px;
+
+
+  scrollbar-width: none;      
+  -ms-overflow-style: none;   
 }
 
+.servico-list::-webkit-scrollbar {
+  display: none;             
+}
+
+
+
+/* ===== BOTÃO BASE ===== */
 .servico-btn {
   all: unset;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+
   width: 100%;
-  padding: 1.2rem 1rem;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 1.2rem;
+  padding: 1.05rem 1rem;
+  border-radius: 18px;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  font-weight: 800;
+  font-size: 1.12rem;
+  letter-spacing: .2px;
   text-align: center;
+
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Ordem das cores */
-.servico-btn:nth-child(1) {
-  background-color: #e74c3c;
   color: #fff;
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
 }
 
-.servico-btn:nth-child(2) {
-  background-color: #3f51b5;
-  color: #fff;
-}
-
-.servico-btn:nth-child(3) {
-  background-color: #f1c40f;
-  color: #000;
-}
-
-/* Hover effect */
 .servico-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.32),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  filter: brightness(1.05);
 }
 
+
+/* ===== CORES A CICLAR (5 cores mais apelativas) ===== */
+.servico-btn:nth-child(5n + 1) {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+}
+.servico-btn:nth-child(5n + 2) {
+  background: linear-gradient(135deg, #6a8dff, #4b5bff);
+}
+.servico-btn:nth-child(5n + 3) {
+  background: linear-gradient(135deg, #ffd93d, #ffb703);
+  color: #0b0b0b;
+}
+.servico-btn:nth-child(5n + 4) {
+  background: linear-gradient(135deg, #2ed573, #1abc9c);
+}
+.servico-btn:nth-child(5n) {
+  background: linear-gradient(135deg, #a55eea, #5f27cd);
+}
+
+
+/* ===== ÍCONES DISCRETOS (sem precisar mexer no HTML) ===== */
+.servico-btn::before {
+  font-size: 1.15rem;
+  line-height: 1;
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
