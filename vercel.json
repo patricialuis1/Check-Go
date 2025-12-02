@@ -27,7 +27,7 @@
 
 
 
-    { "source": "/", "destination": "/public/views/home.html" },
+    { "source": "/", "destination": "/views/home.html" },
     { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
