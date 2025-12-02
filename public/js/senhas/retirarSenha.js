@@ -11,6 +11,7 @@ if (!loja_servico_id) {
 // --- elementos (respeitar ids/classes do HTML) ---
 const estadoInicial = document.getElementById("estado-inicial");
 const estadoRetirado = document.getElementById("estado-retirado");
+const estadoConcluido = document.getElementById("estado-concluido"); // ✅ nova div final
 
 // senha atual no estado inicial tem id
 const senhaAtualInicialEl = document.getElementById("senha-atual");
@@ -72,16 +73,38 @@ const voltarParaEstadoInicial =
   window.voltarParaEstadoInicial ||
   function () {
     estadoRetirado.classList.remove("ativo");
+    estadoConcluido?.classList.remove("ativo");
+
     setTimeout(() => {
       estadoRetirado.style.display = "none";
+      if (estadoConcluido) estadoConcluido.style.display = "none";
+
       estadoInicial.style.display = "block";
       setTimeout(() => estadoInicial.classList.add("ativo"), 10);
     }, 300);
   };
 
+// ✅ mostrar estado concluído
+function mostrarEstadoConcluido() {
+  estadoInicial.classList.remove("ativo");
+  estadoRetirado.classList.remove("ativo");
+
+  setTimeout(() => {
+    estadoInicial.style.display = "none";
+    estadoRetirado.style.display = "none";
+
+    if (estadoConcluido) {
+      estadoConcluido.style.display = "block";
+      setTimeout(() => estadoConcluido.classList.add("ativo"), 10);
+    }
+  }, 300);
+}
+
 // --- API calls ---
 async function fetchFila() {
-  const res = await fetch(`${servidor}/fila/${loja_servico_id}`);
+  const res = await fetch(`${servidor}/fila/${loja_servico_id}`, {
+    cache: "no-store"
+  });
   if (!res.ok) return [];
   return await res.json();
 }
@@ -127,25 +150,44 @@ async function atualizarEstado() {
     preencherVazio(senhaAtualRetiradoEl);
   }
 
-  if (minhaSenha) {
-    preencherSenha(minhaSenhaEl, minhaSenha.numero, minhaSenha.tipo);
+  if (!minhaSenha) return;
 
-    // pessoas à frente (só em Espera)
-    const pessoasAFrente = fila
-      .filter(s => s.status === "Espera")
-      .filter(s => s.numero < minhaSenha.numero).length;
+  // atualiza minha senha na UI
+  preencherSenha(minhaSenhaEl, minhaSenha.numero, minhaSenha.tipo);
 
-    const tempoEstimado = pessoasAFrente * 3;
+  // procurar a minha senha na fila da BD
+  const minhaNaBD = fila.find(s => s.id === minhaSenha.id);
 
-    if (btnTempo) {
-      btnTempo.textContent =
-        tempoEstimado <= 0 ? "Já é a tua vez!" : `${tempoEstimado} min`;
-    }
+  // ✅ se já foi concluída -> mostrar ecrã final
+  if (minhaNaBD && minhaNaBD.status === "Concluido") {
+    minhaSenha = null;
+    mostrarEstadoConcluido();
+    return;
+  }
 
-    const minha = fila.find(s => s.id === minhaSenha.id);
-    if (minha && minha.status === "Atendimento") {
-      if (btnTempo) btnTempo.textContent = "Está a ser atendido";
-    }
+  // ✅ se foi cancelada (cliente faltou ou cancelou)
+  if (minhaNaBD && minhaNaBD.status === "Cancelado") {
+    minhaSenha = null;
+    voltarParaEstadoInicial();
+    return;
+  }
+
+  // pessoas à frente: conta Espera + Atendimento com numero menor
+  const pessoasAFrente = fila
+    .filter(s => s.status === "Espera" || s.status === "Atendimento")
+    .filter(s => s.numero < minhaSenha.numero)
+    .length;
+
+  if (btnTempo) {
+    btnTempo.textContent =
+      pessoasAFrente <= 0
+        ? "Já é a tua vez!"
+        : `${pessoasAFrente} pessoas à tua frente`;
+  }
+
+  // se estou a ser atendido
+  if (minhaNaBD && minhaNaBD.status === "Atendimento") {
+    if (btnTempo) btnTempo.textContent = "Está a ser atendido";
   }
 }
 

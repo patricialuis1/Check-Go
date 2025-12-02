@@ -20,10 +20,11 @@
 
 
     { "source": "/tirarSenha", "destination": "/api/index.js" },
-    { "source": "/fila/:loja_servico_id", "destination": "/api/index.js" },
     { "source": "/cancelarSenha", "destination": "/api/index.js" },
     { "source": "/chamarProximo", "destination": "/api/index.js" },
     { "source": "/concluirSenha", "destination": "/api/index.js" },
+    { "source": "/fila/:loja_servico_id", "destination": "/api/index.js" },
+    { "source": "/estadoFila/:loja_servico_id", "destination": "/api/index.js" },
 
 
 

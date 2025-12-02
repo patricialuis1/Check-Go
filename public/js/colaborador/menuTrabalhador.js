@@ -7,12 +7,11 @@ const senhaContainer = document.getElementById("senha-container");
 const contadorEspera = document.getElementById("contador-espera");
 const btnNext = document.querySelector(".btn-next");
 
-// títulos (opcional)
-const elLoja1 = document.getElementById("loja-nome-1");
-const elLoja2 = document.getElementById("loja-nome-2");
-const elServicoNome = document.getElementById("servico-nome");
+// NOVO: botão concluir (mete no HTML um botão com este id ou class)
+const btnConcluir =
+  document.getElementById("btn-concluir-atual") ||
+  document.querySelector(".btn-concluir");
 
-// id do colaborador logado (se guardas)
 const colaborador_id = Number(localStorage.getItem("user_id")) || null;
 
 if (!loja_servico_id) {
@@ -61,28 +60,38 @@ async function chamarProximo() {
 
   const out = await res.json();
   if (!res.ok) {
-    alert(out.error || "Erro ao chamar próximo.");
+    alert(out.error || out.message || "Erro ao chamar próximo.");
     return null;
   }
   return out; // pode ser null se não houver ninguém
 }
 
+async function concluirSenha(senha_id) {
+  const res = await fetch(`${servidor}/concluirSenha`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ senha_id })
+  });
+
+  const out = await res.json();
+  if (!res.ok) {
+    alert(out.error || out.message || "Erro ao concluir senha.");
+    return null;
+  }
+  return out;
+}
+
+let senhaAtual = null;
+
 async function atualizarPainel() {
   const fila = await fetchFila();
 
-  // senha atual = mais recente em Atendimento, senão primeira em Espera
+  // senha atual = mais recente em Atendimento
   const atendimentos = fila
     .filter(s => s.status === "Atendimento")
     .sort((a, b) => new Date(b.hora_chamada || 0) - new Date(a.hora_chamada || 0));
 
-  let senhaAtual = atendimentos[0];
-
-  if (!senhaAtual) {
-    const esperas = fila
-      .filter(s => s.status === "Espera")
-      .sort((a, b) => new Date(a.data_emissao) - new Date(b.data_emissao));
-    senhaAtual = esperas[0];
-  }
+  senhaAtual = atendimentos[0] || null;
 
   if (senhaAtual) preencherSenha(senhaAtual.numero, senhaAtual.tipo);
   else preencherVazio();
@@ -92,12 +101,23 @@ async function atualizarPainel() {
 }
 
 // eventos
-btnNext.addEventListener("click", async () => {
+btnNext?.addEventListener("click", async () => {
   const nova = await chamarProximo();
   if (!nova) alert("Não há ninguém em espera.");
   atualizarPainel();
 });
 
-// loop
+// NOVO: concluir atual
+btnConcluir?.addEventListener("click", async () => {
+  if (!senhaAtual) {
+    alert("Não há senha em atendimento.");
+    return;
+  }
+  await concluirSenha(senhaAtual.id);
+  senhaAtual = null;
+  atualizarPainel();
+});
+
+// polling
 setInterval(atualizarPainel, 3000);
 atualizarPainel();

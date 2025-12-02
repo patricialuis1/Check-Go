@@ -55,6 +55,20 @@ APP.get("/fila/:loja_servico_id", async (req, res) => {
   }
 });
 
+// estado da fila (senha atual + nº em espera)
+APP.get("/estadoFila/:loja_servico_id", async (req, res) => {
+  try {
+    const loja_servico_id = Number(req.params.loja_servico_id);
+    const bdo = new OperadorSenhas();
+
+    const estado = await bdo.obterEstadoFila(loja_servico_id);
+    res.json(estado);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 // Cliente cancela senha (opcional mas o teu JS usa)
 APP.post("/cancelarSenha", async (req, res) => {
   try {

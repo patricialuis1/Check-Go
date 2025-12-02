@@ -80,4 +80,31 @@
 }
 
 
+/*Menu - Concluido*/
+
+#estado-concluido { display:none; }
+#estado-concluido.ativo { display:block; }
+
+
+#estado-concluido{
+  text-align:center;
+  padding:40px 30px;
+}
+
+#estado-concluido .titulo-final{
+  font-size:28px;
+  font-weight:700;
+  color:white;
+  margin-bottom:12px;
+}
+
+#estado-concluido .texto-final{
+  font-size:18px;
+  color:white;
+  opacity:.9;
+  margin-bottom:25px;
+}
+
+
+
 
