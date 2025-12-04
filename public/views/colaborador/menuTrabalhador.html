@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
   <link rel="stylesheet" href="/css/layout.css" />
   <link rel="stylesheet" href="/css/menuTrabalhador.css" />
+
+  <script type="module">
+  import { requireAuth } from "/js/autenticacao/auth.js";
+  requireAuth(["Colaborador"]);
+  </script>
+
 </head>
 <body>
 
