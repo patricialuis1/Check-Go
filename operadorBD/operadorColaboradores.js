@@ -6,20 +6,42 @@ class OperadorColaboradores {
 
   // criar colaborador
 async inserirColaborador(colab, password) {
-  const { error } = await supabase
-    .from("users")
-    .insert([{
-      nome: colab.nome,
+    
+    // 1. Criar o utilizador no Supabase Auth (auth.users)
+    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: colab.email,
-      password,              
-      role: colab.role,
-      loja_id: colab.loja_id,
-      ativo: colab.ativo
-    }]);
+      password: password,
+      email_confirm: true, // Confirma o email automaticamente (criado por Admin)
+    });
 
-  if (error) throw error;
-  return true;
-}
+    if (authError) {
+      // Supabase Auth lança erros como "User already registered"
+      throw authError; 
+    }
+
+    const authUserId = authData.user.id;
+
+    // 2. Atualizar o perfil public.users criado automaticamente pelo Trigger
+    // Usamos o authUserId para encontrar o perfil e aplicar as permissões Admin.
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({
+        nome: colab.nome,
+        email: colab.email,
+        role: colab.role,
+        loja_id: colab.loja_id,
+        ativo: colab.ativo
+      })
+      .eq("auth_id", authUserId); // O 'auth_id' que o Trigger criou
+
+    if (updateError) {
+      // Se falhar a atualização do perfil, limpamos o user Auth para evitar órfãos
+      await supabase.auth.admin.deleteUser(authUserId);
+      throw updateError;
+    }
+    
+    return true;
+  }
 
 
   // listar colaboradores (com nome da loja)

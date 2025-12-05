@@ -110,6 +110,11 @@ APP.post("/concluirSenha", async (req, res) => {
   }
 });
 
+APP.get("/logout", (req, res) => {
+  // Redireciona o pedido GET /logout diretamente para o ficheiro HTML
+  res.sendFile(path.join(__dirname, "public", "views", "autenticacao", "logout.html"));
+});
+
 
 //------------- FIM SENHAS ----------------
 

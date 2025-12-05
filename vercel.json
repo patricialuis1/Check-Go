@@ -28,6 +28,10 @@
     { "source": "/estadoFila/:loja_servico_id", "destination": "/api/index.js" },
 
 
+    { "source": "/login", "destination": "/views/autenticacao/login.html" },
+    { "source": "/logout", "destination": "/views/autenticacao/logout.html" },
+
+
 
     { "source": "/", "destination": "/views/home.html" },
     { "source": "/(.*)", "destination": "/public/$1" }

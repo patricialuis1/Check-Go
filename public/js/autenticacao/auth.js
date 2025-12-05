@@ -1,4 +1,4 @@
-import supabasePublic from "../config/supabasePublic.js";
+import supabasePublic from "./supabasePublic.js";
 
 export function getAuthUser() {
   try {
