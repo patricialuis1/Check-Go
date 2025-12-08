@@ -1,14 +1,38 @@
+import { getAuthUser, logout } from "../autenticacao/auth.js"; // 🎯 IMPORTAR LOGOUT
+
 const servidor = "";
 
 async function actualizarLojas() {
-  const URL = servidor + "/lojas";
-  const res = await fetch(URL);
-
-  if (!res.ok) {
-    console.error("Erro /lojas:", await res.text());
-    return;
+  // 1. Verificar autenticação
+  const user = getAuthUser(); 
+  
+  // 🎯 CRÍTICO: Verifica se existe o sessionToken (UUID) guardado
+  if (!user || !user.sessionToken) {
+    console.error("Utilizador não autenticado ou token de sessão em falta.");
+    logout(); 
+    return; 
   }
 
+  const URL = servidor + "/lojas";
+  const res = await fetch(URL, {
+    headers: {
+      // 🎯 ENVIA O TOKEN DE SESSÃO DA DB NO CABEÇALHO
+      'Authorization': `Bearer ${user.sessionToken}` 
+    }
+  });
+  
+  // 2. Tratar erros de autorização do backend (401/403)
+  if (res.status === 401 || res.status === 403) {
+      alert("Sessão inválida ou sem permissões. A fazer logout.");
+      logout(); // Força o redirecionamento
+      return; 
+  }
+  
+  if (!res.ok) {
+    console.error("Erro a carregar lojas:", res.status);
+    return;
+  }
+  
   const lojas = await res.json();
   const container = document.getElementById("lista-lojas");
   container.innerHTML = "";
@@ -48,11 +72,19 @@ async function actualizarLojas() {
 }
 
 async function apagarLoja(id) {
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; }
+
   const res = await fetch(servidor + "/apagarLoja", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { 
+      "content-type": "application/json",
+      'Authorization': `Bearer ${user.sessionToken}` 
+    },
     body: JSON.stringify({ id })
   });
+
+  if (res.status === 401 || res.status === 403) { logout(); return; } 
 
   if (!res.ok) return;
   actualizarLojas();

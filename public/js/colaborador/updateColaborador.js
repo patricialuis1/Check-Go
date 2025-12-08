@@ -1,12 +1,25 @@
+import { getAuthUser, logout } from "../autenticacao/auth.js"; // 🎯 NOVO: Importar Segurança
+
 const servidor = "";
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
 const form = document.getElementById("form-update-colab");
 const lojaSelect = document.getElementById("loja_id");
+// ... (restantes variáveis)
 
 async function carregarLojas() {
-  const res = await fetch(servidor + "/lojas");
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; } // Proteção
+
+  const res = await fetch(servidor + "/lojas", {
+    headers: {
+      'Authorization': `Bearer ${user.sessionToken}`
+    }
+  });
+
+  if (res.status === 401 || res.status === 403) { logout(); return; }
+  
   const lojas = await res.json();
 
   lojaSelect.innerHTML =
@@ -15,13 +28,23 @@ async function carregarLojas() {
 }
 
 async function carregarColaborador() {
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; } // Proteção
+
   if (!id) {
     alert("ID inválido.");
     window.location.href = "/views/admin/abaColaborador/listaColaborador.html";
     return;
   }
 
-  const res = await fetch(servidor + "/colaboradores/" + id);
+  const res = await fetch(servidor + "/colaboradores/" + id, {
+    headers: {
+      'Authorization': `Bearer ${user.sessionToken}`
+    }
+  });
+  
+  if (res.status === 401 || res.status === 403) { logout(); return; }
+
   const c = await res.json();
 
   document.getElementById("nome").value = c.nome ?? "";
@@ -47,17 +70,23 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  if (role === "Gerente" && loja_id) {
-  const ok = confirm("Esta loja já pode ter um gerente. Queres substituir o gerente atual?");
-  if (!ok) return;
-  }
-
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; } // Proteção
 
   const res = await fetch(servidor + "/actualizarColaborador", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { 
+      "content-type": "application/json",
+      'Authorization': `Bearer ${user.sessionToken}`
+    },
     body: JSON.stringify({ id, nome, email, role, loja_id, ativo })
   });
+  
+  if (res.status === 401 || res.status === 403) {
+    alert("Sem permissões ou sessão inválida para atualizar.");
+    logout();
+    return;
+  }
 
   const out = await res.json();
   if (!out.resultado) {

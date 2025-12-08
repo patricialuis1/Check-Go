@@ -1,3 +1,5 @@
+import { getAuthUser, logout } from "../autenticacao/auth.js"; // 🎯 NOVO: Importar Segurança
+
 const servidor = "";
 const form = document.getElementById("form-criar-colab");
 const lojaSelect = document.getElementById("loja_id");
@@ -8,7 +10,17 @@ btnCancelar.addEventListener("click", () => {
 });
 
 async function carregarLojas() {
-  const res = await fetch(servidor + "/lojas");
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; } // Verifica e protege
+
+  const res = await fetch(servidor + "/lojas", {
+    headers: {
+      'Authorization': `Bearer ${user.sessionToken}` // Enviar Token
+    }
+  });
+  
+  if (res.status === 401 || res.status === 403) { logout(); return; }
+
   const lojas = await res.json();
 
   lojaSelect.innerHTML = `<option value="">— Sem loja —</option>` + 
@@ -31,11 +43,24 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; } // Verifica e protege
+
   const res = await fetch(servidor + "/novoColaborador", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { 
+      "content-type": "application/json",
+      'Authorization': `Bearer ${user.sessionToken}` // Enviar Token
+    },
     body: JSON.stringify({ nome, email, password, role, loja_id, ativo })
   });
+  
+  if (res.status === 401 || res.status === 403) {
+    alert("Sem permissões para criar colaborador. A fazer logout.");
+    logout();
+    return;
+  }
+
 
   const out = await res.json();
   if (out.response !== "ok") {

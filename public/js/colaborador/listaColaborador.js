@@ -1,7 +1,23 @@
+import { getAuthUser, logout } from "../autenticacao/auth.js"; // 🎯 NOVO: Importar Segurança
+
 const servidor = "";
 
 async function carregarColaboradores() {
-  const res = await fetch(servidor + "/colaboradores");
+  const user = getAuthUser();
+  if (!user || !user.sessionToken) { logout(); return; } // Verifica e protege
+
+  const res = await fetch(servidor + "/colaboradores", {
+    headers: {
+      'Authorization': `Bearer ${user.sessionToken}` // Enviar Token
+    }
+  });
+
+  if (res.status === 401 || res.status === 403) {
+    alert("Sessão inválida ou sem permissões para listar colaboradores.");
+    logout();
+    return;
+  }
+
   if (!res.ok) {
     console.error("Erro /colaboradores", await res.text());
     return;
@@ -39,11 +55,25 @@ async function carregarColaboradores() {
 
     tr.querySelector(".btn-apagar").addEventListener("click", async () => {
       if (!confirm("Apagar colaborador?")) return;
-      await fetch(servidor + "/apagarColaborador", {
+      
+      const user = getAuthUser();
+      if (!user || !user.sessionToken) { logout(); return; }
+      
+      const deleteRes = await fetch(servidor + "/apagarColaborador", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { 
+          "content-type": "application/json",
+          'Authorization': `Bearer ${user.sessionToken}` // Enviar Token
+        },
         body: JSON.stringify({ id: c.id })
       });
+      
+      if (deleteRes.status === 401 || deleteRes.status === 403) {
+        alert("Sem permissões ou sessão inválida para apagar.");
+        logout();
+        return;
+      }
+      
       carregarColaboradores();
     });
 
