@@ -8,7 +8,7 @@ if (input && container) {
   let lojasCache = [];
 
   async function carregarLojas() {
-    const res = await fetch(servidor + "/lojas");
+    const res = await fetch(servidor + "/lojas/publicas");
     if (!res.ok) {
       console.error("Erro a buscar lojas", await res.text());
       return [];

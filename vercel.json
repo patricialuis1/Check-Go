@@ -1,5 +1,8 @@
 {
   "rewrites": [
+    { "source": "/createSession", "destination": "/api/index.js" },
+    { "source": "/deleteSession", "destination": "/api/index.js" },
+
     { "source": "/servicos", "destination": "/api/index.js" },
     { "source": "/servicos/:id", "destination": "/api/index.js" },
     { "source": "/novoServico", "destination": "/api/index.js" },

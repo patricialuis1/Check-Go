@@ -294,6 +294,18 @@ APP.get("/lojas", protegerRota, autorizarCargos(["Administrador", "Gerente", "Co
   }
 });
 
+// Rota pública para o utilizador/pesquisa na homepage
+APP.get("/lojas/publicas", async (req, res) => {
+  try {
+    const bdo = new OperadorLojas();
+    const coleccao = await bdo.obterLojas(); 
+    return res.status(200).json(coleccao);
+  } catch (err) {
+    console.error("🔥 ERRO /lojas/publicas:", err?.stack || err);
+    return res.status(500).json({ message: err.message });
+  }
+});
+
 
 // obter 1 loja (PROTEGIDO: Todos os colaboradores/gestores)
 APP.get("/lojas/:id", protegerRota, autorizarCargos(["Administrador", "Gerente", "Colaborador"]), async (req, res) => {
