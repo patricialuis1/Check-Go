@@ -1,6 +1,7 @@
-.area-conteudo {                
+.area-conteudo { 
+  flex: 1;               
+  overflow-y: auto; 
   padding: 40px 60px;
-  align-items: center;
 }
 
 .pagina-titulo h1 {
