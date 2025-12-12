@@ -99,3 +99,18 @@ body {
     max-width: 280px;
     background: #e65100;
   } 
+
+  .btn-cancelar {
+    background: #b71c1c;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 80%;
+    max-width: 280px;
+    margin-bottom: 15px;
+  }

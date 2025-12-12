@@ -1,6 +1,6 @@
-const servidor = ""; // deixa vazio se a tua API está na mesma origem
+const servidor = ""; 
 
-// --- ler loja_servico_id da query ---
+// --- 1. Parâmetros e Configuração ---
 const params = new URLSearchParams(window.location.search);
 const loja_servico_id = Number(params.get("loja_servico_id"));
 
@@ -8,39 +8,51 @@ if (!loja_servico_id) {
   alert("Serviço inválido. Volta atrás e escolhe um serviço.");
 }
 
-// --- elementos (respeitar ids/classes do HTML) ---
+// --- 2. Elementos do DOM ---
 const estadoInicial = document.getElementById("estado-inicial");
 const estadoRetirado = document.getElementById("estado-retirado");
-const estadoConcluido = document.getElementById("estado-concluido"); // ✅ nova div final
+const estadoConcluido = document.getElementById("estado-concluido");
 
-// senha atual no estado inicial tem id
+// Novos Botões Finais
+const btnVoltarLoja = document.getElementById("btn-voltar-loja"); // Botão "Outro Serviço"
+const btnIrHome = document.getElementById("btn-ir-home");         // Botão "Sair"
+
 const senhaAtualInicialEl = document.getElementById("senha-atual");
-
-// senha atual no estado retirado NÃO tem id no teu HTML,
-// por isso vamos buscar a PRIMEIRA .senha dentro de estado-retirado
 const senhaAtualRetiradoEl = document.querySelector("#estado-retirado .senha");
-
-// minha senha tem id
 const minhaSenhaEl = document.getElementById("senha-user");
 
-// botões
+// Botões de Ação
 const btnRetirar = document.querySelector(".senha-btn");
 const btnCancelar = document.querySelector(".cancel-btn");
 const btnTempo = document.querySelector(".tempo-btn");
 
+// Estado Local
 let minhaSenha = null;
+let ultimoNumeroPessoas = -1; // Para controlar o áudio e não repetir a fala
 
-// --- UI helpers ---
-function preencherSenha(container, numero, tipo = "Normal") {
+// --- 3. Sistema de Áudio (Text-to-Speech) ---
+function falar(texto) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); // Cancela falas anteriores
+    const msg = new SpeechSynthesisUtterance(texto);
+    msg.lang = 'pt-PT'; // Português de Portugal
+    msg.rate = 1.1;     
+    msg.pitch = 1;
+    window.speechSynthesis.speak(msg);
+  }
+}
+
+// --- 4. UI Helpers ---
+
+function preencherSenha(container, numero) {
   if (!container) return;
-
-  const letra = (tipo === "Prioritario") ? "P" : "A";
-  const s = letra + String(numero).padStart(3, "0");
+  // Força sempre "A", ignorando tipo
+  const s = "A" + String(numero).padStart(3, "0");
 
   container.innerHTML = "";
   s.split("").forEach(ch => {
     const d = document.createElement("div");
-    d.className = "digit";     // respeita a tua class
+    d.className = "digit"; 
     d.textContent = ch;
     container.appendChild(d);
   });
@@ -57,23 +69,26 @@ function preencherVazio(container) {
   });
 }
 
-// --- usa as tuas funções inline se existirem, se não, cria fallback ---
-const mostrarEstadoRetirado =
-  window.mostrarEstadoRetirado ||
-  function () {
+// Funções de Transição de Ecrã
+const mostrarEstadoRetirado = function () {
     estadoInicial.classList.remove("ativo");
     setTimeout(() => {
       estadoInicial.style.display = "none";
+      if(estadoConcluido) estadoConcluido.style.display = "none"; 
+      
       estadoRetirado.style.display = "block";
       setTimeout(() => estadoRetirado.classList.add("ativo"), 10);
     }, 300);
-  };
+};
 
-const voltarParaEstadoInicial =
-  window.voltarParaEstadoInicial ||
-  function () {
+const voltarParaEstadoInicial = function () {
+    // Reset visual
     estadoRetirado.classList.remove("ativo");
-    estadoConcluido?.classList.remove("ativo");
+    if(estadoConcluido) estadoConcluido.classList.remove("ativo");
+    
+    // Reset variáveis
+    minhaSenha = null; 
+    ultimoNumeroPessoas = -1; 
 
     setTimeout(() => {
       estadoRetirado.style.display = "none";
@@ -82,12 +97,14 @@ const voltarParaEstadoInicial =
       estadoInicial.style.display = "block";
       setTimeout(() => estadoInicial.classList.add("ativo"), 10);
     }, 300);
-  };
+};
 
-// ✅ mostrar estado concluído
 function mostrarEstadoConcluido() {
   estadoInicial.classList.remove("ativo");
   estadoRetirado.classList.remove("ativo");
+  
+  minhaSenha = null; 
+  ultimoNumeroPessoas = -1;
 
   setTimeout(() => {
     estadoInicial.style.display = "none";
@@ -96,15 +113,17 @@ function mostrarEstadoConcluido() {
     if (estadoConcluido) {
       estadoConcluido.style.display = "block";
       setTimeout(() => estadoConcluido.classList.add("ativo"), 10);
+      
+      // Feedback Sonoro Final
+      falar("Atendimento concluído. Obrigado.");
     }
   }, 300);
 }
 
-// --- API calls ---
+// --- 5. API Calls ---
+
 async function fetchFila() {
-  const res = await fetch(`${servidor}/fila/${loja_servico_id}`, {
-    cache: "no-store"
-  });
+  const res = await fetch(`${servidor}/fila/${loja_servico_id}`, { cache: "no-store" });
   if (!res.ok) return [];
   return await res.json();
 }
@@ -115,13 +134,12 @@ async function tirarSenhaAPI() {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ loja_servico_id, tipo: "Normal" })
   });
-
   const out = await res.json();
   if (!res.ok) {
     alert(out.error || out.message || "Erro ao tirar senha.");
     return null;
   }
-  return out; // {id, numero, tipo, status, data_emissao}
+  return out;
 }
 
 async function cancelarSenhaAPI(senha_id) {
@@ -132,19 +150,19 @@ async function cancelarSenhaAPI(senha_id) {
   }).catch(() => {});
 }
 
-// --- lógica de atualização ---
+// --- 6. Lógica Principal (Polling) ---
+
 async function atualizarEstado() {
   const fila = await fetchFila();
 
-  // senha atual = Atendimento, senão primeira em Espera
+  // A. Atualizar Painéis Gerais
   const emAtendimento = fila.find(s => s.status === "Atendimento");
   const primeiraEspera = fila.find(s => s.status === "Espera");
   const senhaAtual = emAtendimento || primeiraEspera;
 
   if (senhaAtual) {
-    // atualiza as DUAS caixas de “Senha Atual”
-    preencherSenha(senhaAtualInicialEl, senhaAtual.numero, senhaAtual.tipo);
-    preencherSenha(senhaAtualRetiradoEl, senhaAtual.numero, senhaAtual.tipo);
+    preencherSenha(senhaAtualInicialEl, senhaAtual.numero);
+    preencherSenha(senhaAtualRetiradoEl, senhaAtual.numero);
   } else {
     preencherVazio(senhaAtualInicialEl);
     preencherVazio(senhaAtualRetiradoEl);
@@ -152,49 +170,80 @@ async function atualizarEstado() {
 
   if (!minhaSenha) return;
 
-  // atualiza minha senha na UI
-  preencherSenha(minhaSenhaEl, minhaSenha.numero, minhaSenha.tipo);
+  // B. Atualizar Minha Senha
+  preencherSenha(minhaSenhaEl, minhaSenha.numero);
 
-  // procurar a minha senha na fila da BD
+  // C. Verificar Estado na BD
   const minhaNaBD = fila.find(s => s.id === minhaSenha.id);
 
-  // ✅ se já foi concluída -> mostrar ecrã final
-  if (minhaNaBD && minhaNaBD.status === "Concluido") {
-    minhaSenha = null;
-    mostrarEstadoConcluido();
-    return;
+  if (minhaNaBD) {
+    minhaSenha.status = minhaNaBD.status; 
+
+    if (minhaNaBD.status === "Concluido") {
+      mostrarEstadoConcluido();
+      return;
+    }
+    if (minhaNaBD.status === "Cancelado") {
+      alert("A sua senha foi cancelada.");
+      voltarParaEstadoInicial();
+      return;
+    }
+  } else {
+    // Se sumiu da lista...
+    if (minhaSenha.status === "Atendimento") {
+      mostrarEstadoConcluido();
+      return;
+    }
+    if (minhaSenha.status === "Espera") {
+      voltarParaEstadoInicial();
+      return;
+    }
   }
 
-  // ✅ se foi cancelada (cliente faltou ou cancelou)
-  if (minhaNaBD && minhaNaBD.status === "Cancelado") {
-    minhaSenha = null;
-    voltarParaEstadoInicial();
-    return;
-  }
-
-  // pessoas à frente: conta Espera + Atendimento com numero menor
+  // D. Cálculo de Tempo e Áudio
   const pessoasAFrente = fila
     .filter(s => s.status === "Espera" || s.status === "Atendimento")
     .filter(s => s.numero < minhaSenha.numero)
     .length;
 
+  // Atualizar Texto
   if (btnTempo) {
-    btnTempo.textContent =
-      pessoasAFrente <= 0
-        ? "Já é a tua vez!"
-        : `${pessoasAFrente} pessoas à tua frente`;
+    if (minhaSenha.status === "Atendimento") {
+        btnTempo.textContent = "Dirija-se ao balcão!";
+        btnTempo.classList.add("pulsar"); 
+    } else {
+        btnTempo.classList.remove("pulsar");
+        btnTempo.textContent = pessoasAFrente <= 0
+            ? "É a sua vez!"
+            : `${pessoasAFrente} pessoas à frente`;
+    }
   }
 
-  // se estou a ser atendido
-  if (minhaNaBD && minhaNaBD.status === "Atendimento") {
-    if (btnTempo) btnTempo.textContent = "Está a ser atendido";
+  // Lógica de Voz
+  if (minhaSenha.status === "Atendimento" && ultimoNumeroPessoas !== -99) {
+      falar(`Senha A ${minhaSenha.numero}. É a sua vez!`);
+      ultimoNumeroPessoas = -99; 
+  } 
+  else if (minhaSenha.status === "Espera") {
+      if (pessoasAFrente !== ultimoNumeroPessoas) {
+          if (pessoasAFrente === 2) {
+              falar("Atenção. Tem duas pessoas à sua frente.");
+          } else if (pessoasAFrente === 1) {
+              falar("Prepare-se. Tem apenas uma pessoa à sua frente.");
+          }
+          ultimoNumeroPessoas = pessoasAFrente;
+      }
   }
 }
 
-// --- eventos ---
+// --- 7. Eventos ---
+
 if (btnRetirar) {
   btnRetirar.addEventListener("click", async () => {
     if (minhaSenha) return;
+    
+    // Desbloquear áudio no mobile
+    if ('speechSynthesis' in window) window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
 
     const senha = await tirarSenhaAPI();
     if (!senha) return;
@@ -211,15 +260,25 @@ if (btnCancelar) {
       voltarParaEstadoInicial();
       return;
     }
-
     await cancelarSenhaAPI(minhaSenha.id);
-    minhaSenha = null;
-
     voltarParaEstadoInicial();
-    atualizarEstado();
   });
 }
 
-// --- polling “tempo real” ---
+if (btnVoltarLoja) {
+    btnVoltarLoja.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.history.back(); 
+    });
+}
+
+if (btnIrHome) {
+    btnIrHome.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.location.href = "/views/home.html"; 
+    });
+}
+
+// --- Inicialização ---
 setInterval(atualizarEstado, 3000);
 atualizarEstado();
