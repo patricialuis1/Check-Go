@@ -1,6 +1,6 @@
 const servidor = ""; 
 
-// --- 1. Parâmetros e Configuração ---
+
 const params = new URLSearchParams(window.location.search);
 const loja_servico_id = Number(params.get("loja_servico_id"));
 
@@ -8,12 +8,12 @@ if (!loja_servico_id) {
   alert("Serviço inválido. Volta atrás e escolhe um serviço.");
 }
 
-// --- 2. Elementos do DOM ---
+
 const estadoInicial = document.getElementById("estado-inicial");
 const estadoRetirado = document.getElementById("estado-retirado");
 const estadoConcluido = document.getElementById("estado-concluido");
 
-// Novos Botões Finais
+
 const btnVoltarLoja = document.getElementById("btn-voltar-loja"); // Botão "Outro Serviço"
 const btnIrHome = document.getElementById("btn-ir-home");         // Botão "Sair"
 
@@ -21,32 +21,32 @@ const senhaAtualInicialEl = document.getElementById("senha-atual");
 const senhaAtualRetiradoEl = document.querySelector("#estado-retirado .senha");
 const minhaSenhaEl = document.getElementById("senha-user");
 
-// Botões de Ação
+
 const btnRetirar = document.querySelector(".senha-btn");
 const btnCancelar = document.querySelector(".cancel-btn");
 const btnTempo = document.querySelector(".tempo-btn");
 
 // Estado Local
 let minhaSenha = null;
-let ultimoNumeroPessoas = -1; // Para controlar o áudio e não repetir a fala
+let ultimoNumeroPessoas = -1; 
 
-// --- 3. Sistema de Áudio (Text-to-Speech) ---
+
 function falar(texto) {
   if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel(); // Cancela falas anteriores
+    window.speechSynthesis.cancel(); 
     const msg = new SpeechSynthesisUtterance(texto);
-    msg.lang = 'pt-PT'; // Português de Portugal
+    msg.lang = 'pt-PT'; 
     msg.rate = 1.1;     
     msg.pitch = 1;
     window.speechSynthesis.speak(msg);
   }
 }
 
-// --- 4. UI Helpers ---
+
 
 function preencherSenha(container, numero) {
   if (!container) return;
-  // Força sempre "A", ignorando tipo
+
   const s = "A" + String(numero).padStart(3, "0");
 
   container.innerHTML = "";
@@ -69,7 +69,7 @@ function preencherVazio(container) {
   });
 }
 
-// Funções de Transição de Ecrã
+
 const mostrarEstadoRetirado = function () {
     estadoInicial.classList.remove("ativo");
     setTimeout(() => {
@@ -82,11 +82,11 @@ const mostrarEstadoRetirado = function () {
 };
 
 const voltarParaEstadoInicial = function () {
-    // Reset visual
+
     estadoRetirado.classList.remove("ativo");
     if(estadoConcluido) estadoConcluido.classList.remove("ativo");
     
-    // Reset variáveis
+
     minhaSenha = null; 
     ultimoNumeroPessoas = -1; 
 
@@ -114,13 +114,13 @@ function mostrarEstadoConcluido() {
       estadoConcluido.style.display = "block";
       setTimeout(() => estadoConcluido.classList.add("ativo"), 10);
       
-      // Feedback Sonoro Final
+
       falar("Atendimento concluído. Obrigado.");
     }
   }, 300);
 }
 
-// --- 5. API Calls ---
+
 
 async function fetchFila() {
   const res = await fetch(`${servidor}/fila/${loja_servico_id}`, { cache: "no-store" });
@@ -150,12 +150,12 @@ async function cancelarSenhaAPI(senha_id) {
   }).catch(() => {});
 }
 
-// --- 6. Lógica Principal (Polling) ---
+
 
 async function atualizarEstado() {
   const fila = await fetchFila();
 
-  // A. Atualizar Painéis Gerais
+
   const emAtendimento = fila.find(s => s.status === "Atendimento");
   const primeiraEspera = fila.find(s => s.status === "Espera");
   const senhaAtual = emAtendimento || primeiraEspera;
@@ -170,10 +170,10 @@ async function atualizarEstado() {
 
   if (!minhaSenha) return;
 
-  // B. Atualizar Minha Senha
+
   preencherSenha(minhaSenhaEl, minhaSenha.numero);
 
-  // C. Verificar Estado na BD
+
   const minhaNaBD = fila.find(s => s.id === minhaSenha.id);
 
   if (minhaNaBD) {
@@ -189,7 +189,7 @@ async function atualizarEstado() {
       return;
     }
   } else {
-    // Se sumiu da lista...
+
     if (minhaSenha.status === "Atendimento") {
       mostrarEstadoConcluido();
       return;
@@ -200,7 +200,7 @@ async function atualizarEstado() {
     }
   }
 
-  // D. Cálculo de Tempo e Áudio
+  // Cálculo de Tempo e Áudio
   const pessoasAFrente = fila
     .filter(s => s.status === "Espera" || s.status === "Atendimento")
     .filter(s => s.numero < minhaSenha.numero)
@@ -236,7 +236,7 @@ async function atualizarEstado() {
   }
 }
 
-// --- 7. Eventos ---
+// --- Eventos ---
 
 if (btnRetirar) {
   btnRetirar.addEventListener("click", async () => {
