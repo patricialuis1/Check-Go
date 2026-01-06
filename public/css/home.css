@@ -36,3 +36,51 @@
   width: 100%;
   max-width: 320px;
 }
+
+
+/* --- Estilos da Lista de Lojas (Resultados) --- */
+
+#resultados-lojas ul {
+  list-style: none !important; /* Remove as bolinhas/quadrados */
+  padding-left: 0 !important;
+  margin-top: 15px;
+}
+
+/* O cartão da loja individual */
+.loja-card {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 12px;       /* Cantos mais arredondados */
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Sombra suave */
+  transition: all 0.3s ease; /* Animação suave */
+  display: flex;
+  flex-direction: column;
+  
+
+  align-items: center;   
+  text-align: center;    
+  justify-content: center;
+}
+
+/* Efeito ao passar o rato */
+.loja-card:hover {
+  transform: translateY(-3px); /* Levanta ligeiramente o cartão */
+  box-shadow: 0 5px 15px rgba(0, 138, 102, 0.2); /* Sombra verde */
+  border-color: #008a66; /* Borda verde da marca */
+}
+
+/* Título da Loja */
+.loja-card strong {
+  color: #333;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+/* Morada da Loja */
+.loja-card small {
+  color: #777;
+  font-size: 0.9rem;
+}

@@ -106,5 +106,37 @@
 }
 
 
+#estado-concluido .grid {
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;              
+}
+
+
+#estado-concluido button {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+
+
+
+/* Efeito ao passar o rato no botão de contorno */
+#btn-voltar-loja.outline:hover {
+  background-color: white;
+  color: #008a66;
+}
+
+#btn-voltar-loja {
+  background-color: #c0c0c0 !important; /* Amarelo/Laranja vibrante */
+  color: #000 !important;               /* Texto preto para leitura fácil */
+  border: none !important;
+  font-weight: 450;
+}
+
+#btn-voltar-loja:hover {
+  background-color: #858585 !important;
+}
+
 
 

@@ -153,7 +153,22 @@ async function cancelarSenhaAPI(senha_id) {
 
 
 async function atualizarEstado() {
+  
   const fila = await fetchFila();
+
+  const totalPessoasEspera = fila.filter(s => s.status === "Espera").length;
+  
+  const contadorEl = document.getElementById("contador-fila-inicial");
+  
+  if (contadorEl) {
+      if (totalPessoasEspera === 0) {
+          contadorEl.textContent = "Fila vazia. É a tua vez!";
+      } else if (totalPessoasEspera === 1) {
+          contadorEl.textContent = "1 pessoa na fila";
+      } else {
+          contadorEl.textContent = `${totalPessoasEspera} pessoas na fila`;
+      }
+  }
 
 
   const emAtendimento = fila.find(s => s.status === "Atendimento");

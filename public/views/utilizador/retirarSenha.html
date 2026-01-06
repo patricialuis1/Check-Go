@@ -16,8 +16,7 @@
         <img src="/imagens/Check_Go__4_-removebg-preview.png" alt="Logo Check&Go" />
       </div>
       <div class="nav-links">
-        <a href="/home.html">Home</a>
-        <a href="/colaboradores.html">Colaboradores</a>
+        <a href="/views/home.html">Home</a>
       </div>
     </div>
   </header>
@@ -29,14 +28,16 @@
       <div id="estado-inicial" class="estado ativo">
         <h3 class="section-title">Senha Atual:</h3>
         <div class="senha" id="senha-atual">
-          <!-- Dinamicamente preenchido depois -->
-          <div class="digit">A</div>
-          <div class="digit">0</div>
-          <div class="digit">7</div>
-          <div class="digit">8</div>
+          <div class="digit">-</div>
+          <div class="digit">-</div>
+          <div class="digit">-</div>
+          <div class="digit">-</div>
         </div>
 
         <h3 class="section-title">Fila De Espera</h3>
+        
+        <div id="contador-fila-inicial" style="color: white; text-align: center; font-size: 1.2rem; margin-bottom: 15px;">--</div>
+        
         <button class="senha-btn" onclick="mostrarEstadoRetirado()">Retirar Senha</button>
       </div>
 

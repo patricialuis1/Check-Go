@@ -21,28 +21,25 @@ if (input && container) {
 
     if (!lista.length) return;
 
+    // Cria a lista (UL)
     const ul = document.createElement("ul");
-    ul.style.listStyle = "none";
-    ul.style.padding = "0";
-    ul.style.marginTop = "8px";
+    // Não precisamos de definir estilos aqui, o CSS trata disso
 
     lista.forEach(l => {
       const li = document.createElement("li");
-      li.style.padding = "10px 12px";
-      li.style.border = "1px solid #eee";
-      li.style.borderRadius = "10px";
-      li.style.marginBottom = "6px";
-      li.style.cursor = "pointer";
-      li.style.background = "#fff";
+      
+      // Adiciona a classe CSS bonita que criámos
+      li.className = "loja-card"; 
 
+      // O conteúdo HTML
       li.innerHTML = `
-        <strong>${l.nome}</strong><br/>
+        <strong>${l.nome}</strong>
         <small>${l.morada}</small>
       `;
 
+      // Evento de clique
       li.addEventListener("click", () => {
-        window.location.href =
-          `/views/utilizador/escolherServico.html?loja_id=${l.id}`;
+        window.location.href = `/views/utilizador/escolherServico.html?loja_id=${l.id}`;
       });
 
       ul.appendChild(li);
@@ -54,7 +51,7 @@ if (input && container) {
   function filtrarLojas(txt) {
     const t = txt.trim().toLowerCase();
     if (!t) {
-      container.innerHTML = "";
+      renderResultados(lojasCache);
       return;
     }
 
@@ -68,6 +65,8 @@ if (input && container) {
 
   (async () => {
     lojasCache = await carregarLojas();
+
+    renderResultados(lojasCache);
   })();
 
   input.addEventListener("input", (e) => filtrarLojas(e.target.value));
