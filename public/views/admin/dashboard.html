@@ -89,7 +89,7 @@
             <img src="/imagens/icons/colaborador.png" alt="Colaboradores">
           </div>
           <div class="legenda-cartao">Colaboradores</div>
-          <div class="valor-cartao">243</div>
+          <div class="valor-cartao" id="total-colaboradores">...</div>
         </a>
 
         <a href="/views/admin/abaLoja/listaLoja.html" class="cartao-resumo cartao-rosa">
@@ -97,7 +97,7 @@
             <img src="/imagens/icons/lojas.png" alt="Lojas">
           </div>
           <div class="legenda-cartao">Lojas</div>
-          <div class="valor-cartao">82</div>
+          <div class="valor-cartao" id="total-lojas">...</div>
         </a>
 
         <a href="/views/admin/abaServico/listaServico.html" class="cartao-resumo cartao-verde">
@@ -105,10 +105,51 @@
             <img src="/imagens/icons/servicos.png" alt="Serviços">
           </div>
           <div class="legenda-cartao">Serviços</div>
-          <div class="valor-cartao">12</div>
+          <div class="valor-cartao" id="total-servicos">...</div>
         </a>
       </section>
     </main>
   </div>
+  <script>
+
+    document.addEventListener("DOMContentLoaded", async () => {
+    
+    const userStr = localStorage.getItem("auth_user");
+    if (!userStr) return; 
+    
+    const user = JSON.parse(userStr);
+    const token = user.sessionToken;
+
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    };
+
+    async function atualizarContador(endpoint, elementoId) {
+        try {
+            const res = await fetch(endpoint, options);
+            if (res.ok) {
+                const lista = await res.json();
+                
+                if (Array.isArray(lista)) {
+                    const el = document.getElementById(elementoId);
+                    if (el) el.innerText = lista.length; 
+                }
+            } else {
+                console.error(`Erro ao carregar ${endpoint}:`, res.status);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    atualizarContador("/colaboradores", "total-colaboradores");
+    atualizarContador("/lojas", "total-lojas");
+    atualizarContador("/servicos", "total-servicos");
+  });
+  </script>
 </body>
 </html>
